@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
 import { z } from "zod";
 
 // ── Rate limiting (in-memory; upgrade to Vercel KV for stricter limits) ──────
@@ -164,14 +163,21 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const resend = new Resend(apiKey);
-    await resend.emails.send({
-      from: `Buy Builder Direct <${fromEmail}>`,
-      to: [toEmail],
-      replyTo: data.email,
-      subject: `New ${data.formType === "lead" ? "Lead" : "Enquiry"} — ${firstName} ${lastName}`,
-      html: buildEmailHtml(cleanData),
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: `Buy Builder Direct <${fromEmail}>`,
+        to: [toEmail],
+        reply_to: data.email,
+        subject: `New ${data.formType === "lead" ? "Lead" : "Enquiry"} — ${firstName} ${lastName}`,
+        html: buildEmailHtml(cleanData),
+      }),
     });
+    if (!response.ok) throw new Error(`Resend API error: ${response.status}`);
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("Resend error:", err);

@@ -70,16 +70,14 @@ export default function Header() {
  className="flex items-center shrink-0 group"
  aria-label="Buy Builder Direct — Home"
  >
- <div className="bg-white rounded-lg p-1.5">
  <Image
  src="/logo.png"
  alt="Buy Builder Direct"
- width={140}
- height={52}
- className="h-10 w-auto object-contain"
+ width={160}
+ height={60}
+ className="h-12 w-auto object-contain"
  priority
  />
- </div>
  </Link>
 
  {/* ── Desktop Nav ── */}
@@ -202,15 +200,13 @@ export default function Header() {
  onClick={() => setMobileOpen(false)}
  className="flex items-center"
  >
- <div className="bg-white rounded-lg p-1">
  <Image
  src="/logo.png"
  alt="Buy Builder Direct"
- width={110}
- height={40}
- className="h-8 w-auto object-contain"
+ width={130}
+ height={48}
+ className="h-10 w-auto object-contain"
  />
- </div>
  </Link>
  <button
  onClick={() => setMobileOpen(false)}

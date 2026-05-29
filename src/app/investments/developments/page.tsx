@@ -7,6 +7,7 @@ import PropertyGallery from "@/components/shared/PropertyGallery";
 import Breadcrumb from "@/components/shared/Breadcrumb";
 import FAQAccordion, { type FAQItem } from "@/components/shared/FAQAccordion";
 import CTABand from "@/components/shared/CTABand";
+import BenefitsGrid from "@/components/shared/BenefitsGrid";
 
 const benefits = [
  {
@@ -199,36 +200,7 @@ export default function DevelopmentsPage() {
  </section>
 
  {/* ── 3. Key Benefits ─────────────────────────────────────────────── */}
- <section className="section" style={{ background: "#0A0A0A" }}>
- <div className="container-site">
- <h2
- className="text-3xl font-bold mb-10 text-center md:text-4xl"
- style={{ fontFamily: "var(--font-display)", color: "#FFFFFF" }}
- >
- Key Benefits
- </h2>
- <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
- {benefits.map((b) => (
- <div
- key={b.title}
- className="rounded-xl p-6 transition-transform hover:-translate-y-1"
- style={{
- background: "#141414",
- border: "1px solid rgba(220,38,38,0.15)",
- }}
- >
- <span className="text-3xl mb-4 block"><svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="#DC2626" strokeWidth={2.5} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg></span>
- <h3 className="font-bold text-lg mb-2" style={{ color: "#FFFFFF" }}>
- {b.title}
- </h3>
- <p className="text-sm leading-relaxed" style={{ color: "#A3A3A3" }}>
- {b.desc}
- </p>
- </div>
- ))}
- </div>
- </div>
- </section>
+ <BenefitsGrid items={benefits} title="Key Benefits" />
 
  {/* ── 4. How BBD Helps ────────────────────────────────────────────── */}
  <section className="section" style={{ background: "#141414" }}>
