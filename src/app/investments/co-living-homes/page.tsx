@@ -1,7 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
+import PropertyGallery from "@/components/shared/PropertyGallery";
 import Breadcrumb from "@/components/shared/Breadcrumb";
 import FAQAccordion, { type FAQItem } from "@/components/shared/FAQAccordion";
 import CTABand from "@/components/shared/CTABand";
@@ -95,11 +97,11 @@ export default function CoLivingHomesPage() {
  ]}
  />
 
+ <div className="mt-8 grid lg:grid-cols-2 items-center gap-10 pb-8 lg:pb-20">
  <motion.div
  initial={{ opacity: 0, y: 30 }}
  animate={{ opacity: 1, y: 0 }}
  transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
- className="mt-8 max-w-4xl"
  >
  <p
  className="mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold uppercase tracking-widest"
@@ -129,11 +131,33 @@ export default function CoLivingHomesPage() {
  <Link href="/contact?type=co-living-homes" className="btn-primary text-base px-7 py-4">
  Get My Free Assessment
  </Link>
- <a href="tel:1300223776" className="btn-secondary text-base px-7 py-4">
- 1300 BBD PRO
+ <a href="tel:0409005554" className="btn-secondary text-base px-7 py-4">
+ 0409 005 554
  </a>
  </div>
  </motion.div>
+ {/* ── Hero Image ── */}
+ <motion.div
+ initial={{ opacity: 0, clipPath: "inset(0 100% 0 0)" }}
+ animate={{ opacity: 1, clipPath: "inset(0 0% 0 0)" }}
+ transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] as [number,number,number,number], delay: 0.3 }}
+ className="relative hidden lg:block rounded-2xl overflow-hidden"
+ style={{ height: "480px" }}
+ >
+ <Image
+ src="/images/runge-st/living-01.jpg"
+ alt="Co-living investment property interior"
+ fill
+ className="object-cover"
+ sizes="50vw"
+ />
+ <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(10,10,10,0.5) 0%, transparent 60%)" }} />
+ <div className="absolute bottom-4 left-4 rounded-xl px-5 py-3" style={{ background: "rgba(10,10,10,0.85)", border: "1px solid rgba(220,38,38,0.3)" }}>
+ <p className="text-2xl font-black" style={{ color: "#DC2626", fontFamily: "var(--font-display)" }}>6–12%</p>
+ <p className="text-xs" style={{ color: "#A3A3A3" }}>Typical Gross Yield</p>
+ </div>
+ </motion.div>
+ </div>
  </div>
  </section>
 
@@ -384,6 +408,9 @@ export default function CoLivingHomesPage() {
  </div>
  </div>
  </section>
+
+ {/* ── Property Gallery ─────────────────────────────────────────── */}
+ <PropertyGallery title="The Finish Quality" />
 
  {/* ── 8. FAQ ──────────────────────────────────────────────────────── */}
  <section className="section" style={{ background: "#141414" }}>

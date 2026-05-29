@@ -7,6 +7,7 @@ import {
  SavingsCalculator,
  ProcessStepper,
  CaseStudies,
+ PropertyShowcase,
  StatCounters,
  Testimonials,
  FAQPreview,
@@ -24,6 +25,7 @@ export default function Home() {
  <SavingsCalculator />
  <ProcessStepper />
  <CaseStudies />
+ <PropertyShowcase />
  <StatCounters />
  <Testimonials />
  <FAQPreview />

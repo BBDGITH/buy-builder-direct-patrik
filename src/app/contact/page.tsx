@@ -74,10 +74,10 @@ export default function ContactPage() {
  <svg className="w-5 h-5 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="#DC2626" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
  <div>
  <p className="font-semibold" style={{ color: "#FFFFFF" }}>
- 1300 BBD PRO
+ 0409 005 554
  </p>
  <p className="text-sm" style={{ color: "#A3A3A3" }}>
- Call us for a same-day callback
+ Call for a same-day callback
  </p>
  </div>
  </div>
@@ -86,7 +86,7 @@ export default function ContactPage() {
  <svg className="w-5 h-5 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="#DC2626" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
  <div>
  <p className="font-semibold" style={{ color: "#FFFFFF" }}>
- hello@buybuilderdirect.com.au
+ info@buybuilderdirect.com.au
  </p>
  <p className="text-sm" style={{ color: "#A3A3A3" }}>
  We respond within 24 hours
@@ -148,19 +148,17 @@ export default function ContactPage() {
  Book a free 15-minute call directly in our calendar — no
  waiting, no phone tag.
  </p>
- <button
- className="btn-secondary w-full"
- disabled
- aria-label="Calendly booking coming soon"
+ <a
+ href="tel:0409005554"
+ className="btn-primary w-full text-center"
  >
- Book a 15-Min Call (Coming Soon)
- </button>
+ Call 0409 005 554 Now
+ </a>
  <p
  className="text-xs mt-3 text-center"
  style={{ color: "#666666" }}
  >
- Calendly integration coming soon — use the form in the
- meantime.
+ Mon–Fri 9am–6pm AEST · Same-day callback
  </p>
  </div>
  </div>

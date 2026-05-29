@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const investmentLinks = [
  { label: "Co-Living", href: "/investments/co-living-homes" },
@@ -10,6 +11,7 @@ const investmentLinks = [
  { label: "House & Land", href: "/investments/house-and-land" },
  { label: "Custom Builds", href: "/investments/custom-builds" },
  { label: "Developments", href: "/investments/developments" },
+ { label: "Knock Down and Rebuild", href: "/investments/knock-down-rebuild" },
 ];
 
 const navLinks = [
@@ -65,18 +67,19 @@ export default function Header() {
  {/* ── Logo ── */}
  <Link
  href="/"
- className="flex items-center gap-2.5 shrink-0 group"
+ className="flex items-center shrink-0 group"
  aria-label="Buy Builder Direct — Home"
  >
- <span
- className="text-2xl font-black tracking-tight leading-none"
- style={{ color: "#DC2626", fontFamily: "var(--font-display)" }}
- >
- BBD
- </span>
- <span className="hidden sm:block text-white font-semibold text-sm leading-tight tracking-wide">
- Buy Builder Direct
- </span>
+ <div className="bg-white rounded-lg p-1.5">
+ <Image
+ src="/logo.png"
+ alt="Buy Builder Direct"
+ width={140}
+ height={52}
+ className="h-10 w-auto object-contain"
+ priority
+ />
+ </div>
  </Link>
 
  {/* ── Desktop Nav ── */}
@@ -135,11 +138,11 @@ export default function Header() {
  {/* ── Desktop Right: phone + CTA ── */}
  <div className="hidden lg:flex items-center gap-4 shrink-0">
  <a
- href="tel:1300223776"
+ href="tel:0409005554"
  className="text-sm text-white/70 hover:text-white transition-colors"
- aria-label="Call 1300 BBD PRO"
+ aria-label="Call 0409 005 554"
  >
- 1300 BBD PRO
+ 0409 005 554
  </a>
  <Link href="/contact" className="btn-primary text-sm px-5 py-2.5">
  Get Free Assessment
@@ -197,15 +200,17 @@ export default function Header() {
  <Link
  href="/"
  onClick={() => setMobileOpen(false)}
- className="flex items-center gap-2.5"
+ className="flex items-center"
  >
- <span
- className="text-xl font-black tracking-tight"
- style={{ color: "#DC2626", fontFamily: "var(--font-display)" }}
- >
- BBD
- </span>
- <span className="text-white font-semibold text-sm">Buy Builder Direct</span>
+ <div className="bg-white rounded-lg p-1">
+ <Image
+ src="/logo.png"
+ alt="Buy Builder Direct"
+ width={110}
+ height={40}
+ className="h-8 w-auto object-contain"
+ />
+ </div>
  </Link>
  <button
  onClick={() => setMobileOpen(false)}
@@ -259,10 +264,10 @@ export default function Header() {
  {/* Drawer footer CTA */}
  <div className="px-6 py-6 border-t border-[rgba(220,38,38,0.15)] space-y-3">
  <a
- href="tel:1300223776"
+ href="tel:0409005554"
  className="flex items-center justify-center gap-2 w-full py-3 rounded-lg border border-white/20 text-white text-sm font-medium hover:bg-white/5 transition-colors"
  >
- 1300 BBD PRO
+ 0409 005 554
  </a>
  <Link
  href="/contact"

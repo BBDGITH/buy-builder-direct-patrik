@@ -1,19 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const investmentTypes = [
- "Co-Living",
- "Rooming House",
- "SDA/NDIS",
+ "Co-Living Homes",
+ "Rooming Houses",
+ "SDA / NDIS Housing",
  "House & Land",
- "Custom Build",
- "Development",
- "Not sure",
+ "Custom Builds",
+ "Developments",
+ "Knock Down and Rebuild",
+ "Not Sure – Help Me Decide",
 ];
 
-const states = ["VIC", "NSW", "QLD", "WA", "SA", "NT", "TAS"];
+const states = ["VIC", "NSW", "QLD", "WA", "SA", "NT", "TAS", "ACT"];
 
 interface FormData {
  firstName: string;
@@ -22,284 +23,341 @@ interface FormData {
  state: string;
 }
 
-export default function LeadCapture() {
- const [form, setForm] = useState<FormData>({
+const initialForm: FormData = {
  firstName: "",
  phone: "",
  investmentType: "",
  state: "",
- });
+};
+
+export default function LeadCapture() {
+ const [form, setForm] = useState<FormData>(initialForm);
+ const [errors, setErrors] = useState<Partial<FormData>>({});
  const [submitted, setSubmitted] = useState(false);
+ const [submitting, setSubmitting] = useState(false);
+ const [apiError, setApiError] = useState("");
+ const formStartRef = useRef<number>(Date.now());
+ const honeypotRef = useRef<HTMLInputElement>(null);
+
+ useEffect(() => {
+  formStartRef.current = Date.now();
+ }, []);
 
  const handleChange = (
- e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
  ) => {
- setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const { name, value } = e.target;
+  setForm((prev) => ({ ...prev, [name]: value }));
+  if (errors[name as keyof FormData]) {
+   setErrors((prev) => ({ ...prev, [name]: "" }));
+  }
  };
 
- const handleSubmit = (e: React.FormEvent) => {
- e.preventDefault();
- console.log("BBD Lead Capture submission:", form);
- setSubmitted(true);
+ const validate = (): boolean => {
+  const newErrors: Partial<FormData> = {};
+  if (!form.firstName.trim()) newErrors.firstName = "First name is required";
+  if (!form.phone.trim()) {
+   newErrors.phone = "Phone number is required";
+  } else if (form.phone.trim().length < 6) {
+   newErrors.phone = "Please enter a valid phone number";
+  }
+  if (!form.investmentType) newErrors.investmentType = "Please select an investment type";
+  if (!form.state) newErrors.state = "Please select your state";
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
  };
+
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  if (!validate()) return;
+
+  setSubmitting(true);
+  setApiError("");
+
+  try {
+   const res = await fetch("/api/contact", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+     ...form,
+     email: "",
+     formType: "lead",
+     _hp: honeypotRef.current?.value ?? "",
+     _t: formStartRef.current,
+    }),
+   });
+
+   const json = await res.json() as { success?: boolean; error?: string };
+
+   if (!res.ok) {
+    setApiError(json.error ?? "Something went wrong. Please try again.");
+    return;
+   }
+
+   setSubmitted(true);
+  } catch {
+   setApiError("Network error. Please call us on 0409 005 554.");
+  } finally {
+   setSubmitting(false);
+  }
+ };
+
+ const selectStyle = (value: string, hasError: boolean) => ({
+  background: "#1C1C1C" as const,
+  border: `1px solid ${hasError ? "#EF4444" : "rgba(220,38,38,0.2)"}`,
+  color: value ? "#FFFFFF" : "#666666",
+ } as React.CSSProperties);
+
+ const inputStyle = (hasError: boolean) => ({
+  background: "#1C1C1C" as const,
+  border: `1px solid ${hasError ? "#EF4444" : "rgba(220,38,38,0.2)"}`,
+  color: "#FFFFFF" as const,
+ } as React.CSSProperties);
 
  return (
- <section
- className="section"
- style={{
- background: "#141414",
- borderTop: "1px solid rgba(220,38,38,0.2)",
- }}
- >
- <div className="container-site">
- <div className="grid gap-12 lg:grid-cols-2 items-center">
- {/* Left: Form */}
- <motion.div
- initial={{ opacity: 0, x: -30 }}
- whileInView={{ opacity: 1, x: 0 }}
- viewport={{ once: true }}
- transition={{ duration: 0.6 }}
- >
- <h2
- className="text-4xl font-bold mb-3 md:text-5xl"
- style={{ fontFamily: "var(--font-display)", color: "#FFFFFF" }}
- >
- Ready to Save on Your Next Investment?
- </h2>
- <p className="text-lg mb-8" style={{ color: "#A3A3A3" }}>
- Get your free savings assessment — takes 2 minutes
- </p>
+  <section
+   className="section"
+   style={{
+    background: "#141414",
+    borderTop: "1px solid rgba(220,38,38,0.2)",
+   }}
+  >
+   <div className="container-site">
+    <div className="grid gap-12 lg:grid-cols-2 items-center">
 
- {submitted ? (
- <div
- className="rounded-xl p-8 text-center"
- style={{
- background: "rgba(34,197,94,0.1)",
- border: "1px solid rgba(34,197,94,0.3)",
- }}
- >
- <svg className="w-12 h-12 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="#22C55E" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
- <h3
- className="text-xl font-bold mb-2"
- style={{ color: "#22C55E" }}
- >
- Assessment Request Received!
- </h3>
- <p className="text-sm" style={{ color: "#A3A3A3" }}>
- Our team will be in touch within 1 business day to discuss
- your savings assessment.
- </p>
- </div>
- ) : (
- <form onSubmit={handleSubmit} className="flex flex-col gap-4">
- {/* First Name */}
- <div>
- <label
- htmlFor="firstName"
- className="block text-sm font-medium mb-1.5"
- style={{ color: "#A3A3A3" }}
- >
- First Name <span style={{ color: "#DC2626" }}>*</span>
- </label>
- <input
- id="firstName"
- name="firstName"
- type="text"
- required
- value={form.firstName}
- onChange={handleChange}
- placeholder="e.g. Sarah"
- className="w-full rounded-lg px-4 py-3 text-sm outline-none transition-colors"
- style={{
- background: "#1C1C1C",
- border: "1px solid rgba(220,38,38,0.2)",
- color: "#FFFFFF",
- }}
- onFocus={(e) => {
- e.currentTarget.style.borderColor = "#DC2626";
- }}
- onBlur={(e) => {
- e.currentTarget.style.borderColor = "rgba(220,38,38,0.2)";
- }}
- />
- </div>
+     {/* Left: Form */}
+     <motion.div
+      initial={{ opacity: 0, x: -30 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+     >
+      <h2
+       className="text-4xl font-bold mb-3 md:text-5xl"
+       style={{ fontFamily: "var(--font-display)", color: "#FFFFFF" }}
+      >
+       Ready to Save on Your Next Investment?
+      </h2>
+      <p className="text-lg mb-8" style={{ color: "#A3A3A3" }}>
+       Get your free savings assessment — takes 2 minutes
+      </p>
 
- {/* Phone */}
- <div>
- <label
- htmlFor="phone"
- className="block text-sm font-medium mb-1.5"
- style={{ color: "#A3A3A3" }}
- >
- Phone <span style={{ color: "#DC2626" }}>*</span>
- </label>
- <input
- id="phone"
- name="phone"
- type="tel"
- required
- value={form.phone}
- onChange={handleChange}
- placeholder="04XX XXX XXX"
- className="w-full rounded-lg px-4 py-3 text-sm outline-none transition-colors"
- style={{
- background: "#1C1C1C",
- border: "1px solid rgba(220,38,38,0.2)",
- color: "#FFFFFF",
- }}
- onFocus={(e) => {
- e.currentTarget.style.borderColor = "#DC2626";
- }}
- onBlur={(e) => {
- e.currentTarget.style.borderColor = "rgba(220,38,38,0.2)";
- }}
- />
- </div>
+      {submitted ? (
+       <div
+        className="rounded-xl p-8 text-center"
+        style={{
+         background: "rgba(34,197,94,0.1)",
+         border: "1px solid rgba(34,197,94,0.3)",
+        }}
+       >
+        <svg className="w-12 h-12 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="#22C55E" strokeWidth={2} aria-hidden="true">
+         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <h3 className="text-xl font-bold mb-2" style={{ color: "#22C55E" }}>
+         Assessment Request Received!
+        </h3>
+        <p className="text-sm" style={{ color: "#A3A3A3" }}>
+         Our team will be in touch within 1 business day to discuss your
+         savings assessment.
+        </p>
+       </div>
+      ) : (
+       <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
+        {/* Honeypot */}
+        <input
+         ref={honeypotRef}
+         type="text"
+         name="_hp"
+         tabIndex={-1}
+         aria-hidden="true"
+         autoComplete="off"
+         style={{ position: "absolute", left: "-9999px", opacity: 0, pointerEvents: "none" }}
+        />
 
- {/* Investment Type */}
- <div>
- <label
- htmlFor="investmentType"
- className="block text-sm font-medium mb-1.5"
- style={{ color: "#A3A3A3" }}
- >
- Investment Type <span style={{ color: "#DC2626" }}>*</span>
- </label>
- <select
- id="investmentType"
- name="investmentType"
- required
- value={form.investmentType}
- onChange={handleChange}
- className="w-full rounded-lg px-4 py-3 text-sm outline-none transition-colors appearance-none"
- style={{
- background: "#1C1C1C",
- border: "1px solid rgba(220,38,38,0.2)",
- color: form.investmentType ? "#FFFFFF" : "#666666",
- }}
- >
- <option value="" disabled>
- Select investment type
- </option>
- {investmentTypes.map((t) => (
- <option key={t} value={t} style={{ color: "#FFFFFF" }}>
- {t}
- </option>
- ))}
- </select>
- </div>
+        {/* First Name */}
+        <div>
+         <label htmlFor="lcFirstName" className="block text-sm font-medium mb-1.5" style={{ color: "#A3A3A3" }}>
+          First Name <span style={{ color: "#DC2626" }}>*</span>
+         </label>
+         <input
+          id="lcFirstName" name="firstName" type="text" required
+          value={form.firstName} onChange={handleChange}
+          placeholder="e.g. Sarah"
+          className="w-full rounded-lg px-4 py-3 text-sm outline-none transition-colors"
+          style={inputStyle(!!errors.firstName)}
+          onFocus={(e) => { if (!errors.firstName) e.currentTarget.style.borderColor = "#DC2626"; }}
+          onBlur={(e) => { if (!errors.firstName) e.currentTarget.style.borderColor = "rgba(220,38,38,0.2)"; }}
+         />
+         {errors.firstName && <p className="mt-1 text-xs" style={{ color: "#EF4444" }}>{errors.firstName}</p>}
+        </div>
 
- {/* State */}
- <div>
- <label
- htmlFor="state"
- className="block text-sm font-medium mb-1.5"
- style={{ color: "#A3A3A3" }}
- >
- State <span style={{ color: "#DC2626" }}>*</span>
- </label>
- <select
- id="state"
- name="state"
- required
- value={form.state}
- onChange={handleChange}
- className="w-full rounded-lg px-4 py-3 text-sm outline-none transition-colors appearance-none"
- style={{
- background: "#1C1C1C",
- border: "1px solid rgba(220,38,38,0.2)",
- color: form.state ? "#FFFFFF" : "#666666",
- }}
- >
- <option value="" disabled>
- Select your state
- </option>
- {states.map((s) => (
- <option key={s} value={s} style={{ color: "#FFFFFF" }}>
- {s}
- </option>
- ))}
- </select>
- </div>
+        {/* Phone */}
+        <div>
+         <label htmlFor="lcPhone" className="block text-sm font-medium mb-1.5" style={{ color: "#A3A3A3" }}>
+          Phone <span style={{ color: "#DC2626" }}>*</span>
+         </label>
+         <input
+          id="lcPhone" name="phone" type="tel" required
+          value={form.phone} onChange={handleChange}
+          placeholder="04XX XXX XXX"
+          className="w-full rounded-lg px-4 py-3 text-sm outline-none transition-colors"
+          style={inputStyle(!!errors.phone)}
+          onFocus={(e) => { if (!errors.phone) e.currentTarget.style.borderColor = "#DC2626"; }}
+          onBlur={(e) => { if (!errors.phone) e.currentTarget.style.borderColor = "rgba(220,38,38,0.2)"; }}
+         />
+         {errors.phone && <p className="mt-1 text-xs" style={{ color: "#EF4444" }}>{errors.phone}</p>}
+        </div>
 
- <button type="submit" className="btn-primary w-full py-4 text-base mt-2">
- Get My Free Assessment
- </button>
+        {/* Investment Type */}
+        <div>
+         <label htmlFor="lcInvestmentType" className="block text-sm font-medium mb-1.5" style={{ color: "#A3A3A3" }}>
+          Investment Type <span style={{ color: "#DC2626" }}>*</span>
+         </label>
+         <select
+          id="lcInvestmentType" name="investmentType" required
+          value={form.investmentType} onChange={handleChange}
+          className="w-full rounded-lg px-4 py-3 text-sm outline-none transition-colors appearance-none"
+          style={selectStyle(form.investmentType, !!errors.investmentType)}
+         >
+          <option value="" disabled>Select investment type</option>
+          {investmentTypes.map((t) => (
+           <option key={t} value={t} style={{ color: "#FFFFFF" }}>{t}</option>
+          ))}
+         </select>
+         {errors.investmentType && <p className="mt-1 text-xs" style={{ color: "#EF4444" }}>{errors.investmentType}</p>}
+        </div>
 
- <p className="text-xs text-center" style={{ color: "#666666" }}>
- No spam. No obligation. We respect your privacy.
- </p>
- </form>
- )}
- </motion.div>
+        {/* State */}
+        <div>
+         <label htmlFor="lcState" className="block text-sm font-medium mb-1.5" style={{ color: "#A3A3A3" }}>
+          State <span style={{ color: "#DC2626" }}>*</span>
+         </label>
+         <select
+          id="lcState" name="state" required
+          value={form.state} onChange={handleChange}
+          className="w-full rounded-lg px-4 py-3 text-sm outline-none transition-colors appearance-none"
+          style={selectStyle(form.state, !!errors.state)}
+         >
+          <option value="" disabled>Select your state</option>
+          {states.map((s) => (
+           <option key={s} value={s} style={{ color: "#FFFFFF" }}>{s}</option>
+          ))}
+         </select>
+         {errors.state && <p className="mt-1 text-xs" style={{ color: "#EF4444" }}>{errors.state}</p>}
+        </div>
 
- {/* Right: Book a call */}
- <motion.div
- initial={{ opacity: 0, x: 30 }}
- whileInView={{ opacity: 1, x: 0 }}
- viewport={{ once: true }}
- transition={{ duration: 0.6, delay: 0.1 }}
- className="flex flex-col justify-center"
- >
- <div
- className="rounded-2xl p-8"
- style={{
- background: "rgba(220,38,38,0.08)",
- border: "1px solid rgba(220,38,38,0.25)",
- }}
- >
- <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#DC2626" }}>
- Prefer to talk?
- </p>
- <h3
- className="text-2xl font-bold mb-4"
- style={{ color: "#FFFFFF", fontFamily: "var(--font-display)" }}
- >
- Or Book a Call Directly
- </h3>
- <p className="text-sm leading-relaxed mb-6" style={{ color: "#A3A3A3" }}>
- Speak directly with an investment specialist. We&apos;ll discuss your
- goals, target state, and investment strategy — no pressure, no
- obligation.
- </p>
+        {apiError && (
+         <div
+          className="rounded-lg px-4 py-3 text-sm"
+          style={{ background: "rgba(239,68,68,0.12)", border: "1px solid rgba(239,68,68,0.3)", color: "#FCA5A5" }}
+          role="alert"
+         >
+          {apiError}
+         </div>
+        )}
 
- <a
- href="tel:1300223776"
- className="flex items-center gap-3 mb-2"
- style={{ color: "#FFFFFF" }}
- >
- <span
- className="flex h-10 w-10 items-center justify-center rounded-full shrink-0 text-lg"
- style={{ background: "#DC2626" }}
- >
+        <button
+         type="submit"
+         disabled={submitting}
+         className="btn-primary w-full py-4 text-base mt-2"
+         style={{ opacity: submitting ? 0.7 : 1 }}
+        >
+         {submitting ? (
+          <span className="flex items-center justify-center gap-2">
+           <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+           </svg>
+           Sending...
+          </span>
+         ) : (
+          "Get My Free Assessment"
+         )}
+        </button>
 
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
- </span>
- <div>
- <p className="font-bold text-lg">1300 BBD PRO</p>
- <p className="text-xs" style={{ color: "#A3A3A3" }}>
- 1300 223 776
- </p>
- </div>
- </a>
+        <p className="text-xs text-center" style={{ color: "#666666" }}>
+         No spam. No obligation. We respect your privacy.
+        </p>
+       </form>
+      )}
+     </motion.div>
 
- <div
- className="mt-4 pt-4 text-sm"
- style={{
- color: "#A3A3A3",
- borderTop: "1px solid rgba(255,255,255,0.06)",
- }}
- >
- <p className="font-medium mb-1" style={{ color: "#FFFFFF" }}>
- Business Hours
- </p>
- <p>Mon – Fri: 8:30am – 6:00pm AEST</p>
- <p>Sat: 9:00am – 1:00pm AEST</p>
- </div>
- </div>
- </motion.div>
- </div>
- </div>
- </section>
+     {/* Right: Contact info */}
+     <motion.div
+      initial={{ opacity: 0, x: 30 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: 0.1 }}
+      className="flex flex-col justify-center"
+     >
+      <div
+       className="rounded-2xl p-8"
+       style={{
+        background: "rgba(220,38,38,0.08)",
+        border: "1px solid rgba(220,38,38,0.25)",
+       }}
+      >
+       <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#DC2626" }}>
+        Prefer to talk?
+       </p>
+       <h3
+        className="text-2xl font-bold mb-4"
+        style={{ color: "#FFFFFF", fontFamily: "var(--font-display)" }}
+       >
+        Call Us Directly
+       </h3>
+       <p className="text-sm leading-relaxed mb-6" style={{ color: "#A3A3A3" }}>
+        Speak directly with an investment specialist. We&apos;ll discuss your
+        goals, target state, and investment strategy — no pressure, no
+        obligation.
+       </p>
+
+       <a
+        href="tel:0409005554"
+        className="flex items-center gap-3 mb-2 group"
+        style={{ color: "#FFFFFF" }}
+       >
+        <span
+         className="flex h-10 w-10 items-center justify-center rounded-full shrink-0"
+         style={{ background: "#DC2626" }}
+        >
+         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2} aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+         </svg>
+        </span>
+        <div>
+         <p className="font-bold text-lg group-hover:text-[#DC2626] transition-colors">0409 005 554</p>
+         <p className="text-xs" style={{ color: "#A3A3A3" }}>
+          Call for a same-day callback
+         </p>
+        </div>
+       </a>
+
+       <a
+        href="mailto:info@buybuilderdirect.com.au"
+        className="flex items-center gap-3 mt-3 group"
+        style={{ color: "#A3A3A3" }}
+       >
+        <span className="flex h-10 w-10 items-center justify-center rounded-full shrink-0" style={{ background: "rgba(220,38,38,0.12)" }}>
+         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#DC2626" strokeWidth={1.5} aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+         </svg>
+        </span>
+        <p className="text-sm group-hover:text-white transition-colors">info@buybuilderdirect.com.au</p>
+       </a>
+
+       <div
+        className="mt-4 pt-4 text-sm"
+        style={{ color: "#A3A3A3", borderTop: "1px solid rgba(255,255,255,0.06)" }}
+       >
+        <p className="font-medium mb-1" style={{ color: "#FFFFFF" }}>Business Hours</p>
+        <p>Mon – Fri: 8:30am – 6:00pm AEST</p>
+        <p>Sat: 9:00am – 1:00pm AEST</p>
+       </div>
+      </div>
+     </motion.div>
+    </div>
+   </div>
+  </section>
  );
 }
