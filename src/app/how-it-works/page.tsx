@@ -106,12 +106,12 @@ function StepSection({ step, index }: { step: (typeof steps)[0]; index: number }
   return (
     <div
       ref={ref}
-      className="relative grid lg:grid-cols-2 min-h-[520px]"
+      className="relative grid lg:grid-cols-2 min-h-[360px] lg:min-h-[520px]"
       style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}
     >
       {/* ── Content panel ─────────────────────────────── */}
       <div
-        className={`relative flex flex-col justify-center px-8 py-16 lg:px-16 xl:px-20 ${isEven ? "lg:order-2" : ""}`}
+        className={`relative flex flex-col justify-center px-5 py-10 sm:px-8 sm:py-14 lg:px-16 xl:px-20 ${isEven ? "lg:order-2" : ""}`}
         style={{ background: "#0A0A0A" }}
       >
         {/* Watermark number */}
@@ -213,7 +213,7 @@ function StepSection({ step, index }: { step: (typeof steps)[0]; index: number }
       {/* ── Image panel ───────────────────────────────── */}
       <div
         className={`relative overflow-hidden ${isEven ? "lg:order-1" : ""}`}
-        style={{ minHeight: "400px" }}
+        style={{ minHeight: "clamp(260px, 50vw, 500px)" }}
       >
         <motion.div
           className="absolute inset-0"

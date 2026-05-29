@@ -55,7 +55,7 @@ export default function PropertyGallery({ title = "The Finish Quality" }: { titl
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3" style={{ gridAutoRows: "200px" }}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 gallery-grid">
           {photos.map((photo, i) => (
             <motion.div
               key={photo.src}
@@ -63,7 +63,7 @@ export default function PropertyGallery({ title = "The Finish Quality" }: { titl
               animate={inView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.55, delay: 0.1 + i * 0.07, ease: [0.25, 0.1, 0.25, 1] }}
               className={`relative overflow-hidden rounded-xl group cursor-pointer ${i === 0 ? "col-span-2 row-span-2" : ""}`}
-              style={{ minHeight: i === 0 ? "404px" : undefined }}
+              style={{ minHeight: i === 0 ? "clamp(280px, 40vw, 404px)" : undefined }}
             >
               <Image
                 src={photo.src}

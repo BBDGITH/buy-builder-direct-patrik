@@ -13,7 +13,7 @@ export default function FAQPage() {
  <>
  {/* ── Hero ──────────────────────────────────────────────────── */}
  <section
- className="section"
+ className="section-hero"
  style={{
  background:
  "linear-gradient(135deg, #0A0A0A 0%, #141414 50%, #0A0A0A 100%)",

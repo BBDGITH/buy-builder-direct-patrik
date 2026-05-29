@@ -86,15 +86,11 @@ export default function PathwayCards() {
         </motion.div>
 
         {/* ── Cards grid — first card featured (2 cols × 2 rows) ── */}
-        <div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3"
-          style={{ gridAutoRows: "280px" }}
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pathway-grid">
           {pathways.map((p, i) => (
             <motion.div
               key={p.href}
-              className={i === 0 ? "sm:col-span-2 lg:row-span-2" : ""}
-              style={{ minHeight: i === 0 ? "564px" : "280px" }}
+              className={`${i === 0 ? "sm:col-span-2 lg:row-span-2 min-h-[220px] sm:min-h-[524px] lg:min-h-[564px]" : "min-h-[200px] sm:min-h-[260px] lg:min-h-[280px]"}`}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

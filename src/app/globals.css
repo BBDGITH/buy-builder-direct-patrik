@@ -46,6 +46,9 @@ html {
  scroll-behavior: smooth;
  background-color: var(--color-bg);
  color: var(--color-text-primary);
+ /* Support notched phones */
+ -webkit-text-size-adjust: 100%;
+ text-size-adjust: 100%;
 }
 
 body {
@@ -54,6 +57,13 @@ body {
  color: var(--color-text-primary);
  -webkit-font-smoothing: antialiased;
  -moz-osx-font-smoothing: grayscale;
+ /* Space for sticky mobile CTA (h-14 = 56px) on small screens */
+ padding-bottom: 56px;
+}
+@media (min-width: 768px) {
+ body {
+ padding-bottom: 0;
+ }
 }
 
 /* ─── Selection ─────────────────────────────────────────────────────────── */
@@ -149,12 +159,29 @@ body {
 
 /* ─── Layout Utilities ──────────────────────────────────────────────────── */
 .section {
- padding-top: 4rem; /* 64px mobile */
- padding-bottom: 4rem;
+ padding-top: 3.5rem; /* 56px mobile */
+ padding-bottom: 3.5rem;
 }
 @media (min-width: 768px) {
  .section {
  padding-top: 6rem; /* 96px desktop */
+ padding-bottom: 6rem;
+ }
+}
+
+/* First section after fixed header — adds clearance for the nav bar */
+.section-hero {
+ padding-top: 7rem; /* 112px — clears ~90px header on mobile */
+ padding-bottom: 3.5rem;
+}
+@media (min-width: 640px) {
+ .section-hero {
+ padding-top: 8rem;
+ }
+}
+@media (min-width: 768px) {
+ .section-hero {
+ padding-top: 9rem;
  padding-bottom: 6rem;
  }
 }
@@ -164,12 +191,61 @@ body {
  max-width: 1280px;
  margin-left: auto;
  margin-right: auto;
- padding-left: 1.5rem; /* px-6 */
+ padding-left: 1.25rem; /* px-5 mobile */
+ padding-right: 1.25rem;
+}
+@media (min-width: 640px) {
+ .container-site {
+ padding-left: 1.5rem;
  padding-right: 1.5rem;
+ }
 }
 @media (min-width: 768px) {
  .container-site {
  padding-left: 2rem; /* px-8 */
  padding-right: 2rem;
+ }
+}
+
+/* ─── Responsive Grid Helpers ───────────────────────────────────────────── */
+/* PathwayCards responsive grid rows */
+.pathway-grid {
+ grid-auto-rows: 200px;
+}
+@media (min-width: 640px) {
+ .pathway-grid {
+ grid-auto-rows: 260px;
+ }
+}
+@media (min-width: 1024px) {
+ .pathway-grid {
+ grid-auto-rows: 280px;
+ }
+}
+
+/* PropertyGallery responsive grid rows */
+.gallery-grid {
+ grid-auto-rows: 140px;
+}
+@media (min-width: 640px) {
+ .gallery-grid {
+ grid-auto-rows: 170px;
+ }
+}
+@media (min-width: 768px) {
+ .gallery-grid {
+ grid-auto-rows: 200px;
+ }
+}
+
+/* ─── Reduced Motion ────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+ *,
+ *::before,
+ *::after {
+ animation-duration: 0.01ms !important;
+ animation-iteration-count: 1 !important;
+ transition-duration: 0.01ms !important;
+ scroll-behavior: auto !important;
  }
 }

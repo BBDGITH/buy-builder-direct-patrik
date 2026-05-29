@@ -55,7 +55,7 @@ export default function KnockDownRebuildPage() {
   <>
    {/* ── Hero ── */}
    <section
-    className="relative section overflow-hidden"
+    className="relative section-hero overflow-hidden"
     style={{
      background: "linear-gradient(135deg, #0A0A0A 0%, #141414 50%, #0A0A0A 100%)",
      borderBottom: "1px solid rgba(220,38,38,0.15)",

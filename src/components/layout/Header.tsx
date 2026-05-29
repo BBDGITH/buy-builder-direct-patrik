@@ -73,9 +73,9 @@ export default function Header() {
  <Image
  src="/logo.png"
  alt="Buy Builder Direct"
- width={160}
- height={60}
- className="h-12 w-auto object-contain"
+ width={422}
+ height={264}
+ className="h-16 w-auto object-contain"
  priority
  />
  </Link>
@@ -203,9 +203,9 @@ export default function Header() {
  <Image
  src="/logo.png"
  alt="Buy Builder Direct"
- width={130}
- height={48}
- className="h-10 w-auto object-contain"
+ width={422}
+ height={264}
+ className="h-14 w-auto object-contain"
  />
  </Link>
  <button

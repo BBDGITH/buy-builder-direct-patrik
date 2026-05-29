@@ -22,7 +22,8 @@ const supportLinks = [
  { label: "FAQ", href: "/faq" },
  { label: "Contact", href: "/contact" },
  { label: "Privacy Policy", href: "/privacy-policy" },
- { label: "Terms", href: "/terms" },
+ { label: "Terms of Service", href: "/terms" },
+ { label: "Disclaimer", href: "/disclaimer" },
 ];
 
 function FooterColumn({
@@ -68,15 +69,13 @@ export default function Footer() {
      {/* Col 1: Brand */}
      <div className="sm:col-span-2 lg:col-span-1">
       <Link href="/" className="inline-flex items-center mb-4 group">
-       <div className="bg-white rounded-lg p-1.5">
-        <Image
-         src="/logo.png"
-         alt="Buy Builder Direct"
-         width={130}
-         height={48}
-         className="h-10 w-auto object-contain"
-        />
-       </div>
+       <Image
+        src="/logo.png"
+        alt="Buy Builder Direct"
+        width={422}
+        height={264}
+        className="h-16 w-auto object-contain"
+       />
       </Link>
       <p className="text-sm text-[#A3A3A3] leading-relaxed mb-6 max-w-xs">
        Australia&rsquo;s direct-to-builder investment platform. Skip the agents,

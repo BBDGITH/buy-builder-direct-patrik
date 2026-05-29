@@ -5,14 +5,18 @@ import { Header, Footer, StickyMobileCTA } from "@/components/layout";
 
 const playfair = Playfair_Display({
  subsets: ["latin"],
+ weight: ["700", "800", "900"],
  variable: "--font-playfair",
  display: "swap",
+ preload: true,
 });
 
 const dmSans = DM_Sans({
  subsets: ["latin"],
+ weight: ["400", "500", "600", "700"],
  variable: "--font-dmsans",
  display: "swap",
+ preload: true,
 });
 
 const BASE_URL =
@@ -89,8 +93,12 @@ export const metadata: Metadata = {
   canonical: BASE_URL,
  },
  icons: {
-  icon: "/favicon.ico",
+  icon: [
+   { url: "/favicon.ico", sizes: "any" },
+   { url: "/logo.png", type: "image/png" },
+  ],
   apple: "/favicon.ico",
+  shortcut: "/favicon.ico",
  },
  verification: {
   // Add your Google Search Console & Bing verification codes here:

@@ -76,7 +76,7 @@ export default function SdaNdisHomesPage() {
  <>
  {/* ── 1. Hero ─────────────────────────────────────────────────────── */}
  <section
- className="relative overflow-hidden pt-32 pb-20"
+ className="relative overflow-hidden pt-24 sm:pt-28 lg:pt-32 pb-10 sm:pb-14 lg:pb-20"
  style={{ background: "#0A0A0A" }}
  >
  <div
@@ -97,7 +97,7 @@ export default function SdaNdisHomesPage() {
  ]}
  />
 
- <div className="mt-8 grid lg:grid-cols-2 items-center gap-10 pb-8 lg:pb-20">
+ <div className="mt-6 grid lg:grid-cols-2 items-center gap-8 lg:gap-10 pb-6 lg:pb-20">
  <motion.div
  initial={{ opacity: 0, y: 30 }}
  animate={{ opacity: 1, y: 0 }}
@@ -142,15 +142,15 @@ export default function SdaNdisHomesPage() {
  initial={{ opacity: 0, clipPath: "inset(0 100% 0 0)" }}
  animate={{ opacity: 1, clipPath: "inset(0 0% 0 0)" }}
  transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] as [number,number,number,number], delay: 0.3 }}
- className="relative hidden lg:block rounded-2xl overflow-hidden"
- style={{ height: "480px" }}
+ className="relative block rounded-2xl overflow-hidden h-64 sm:h-80 lg:h-[480px]"
  >
  <Image
  src="/images/runge-st/bathroom-02.jpg"
  alt="SDA NDIS investment property — accessible bathroom"
  fill
+ priority
  className="object-cover"
- sizes="50vw"
+ sizes="(max-width: 1024px) 100vw, 50vw"
  />
  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(10,10,10,0.5) 0%, transparent 60%)" }} />
  <div className="absolute bottom-4 left-4 rounded-xl px-5 py-3" style={{ background: "rgba(10,10,10,0.85)", border: "1px solid rgba(220,38,38,0.3)" }}>
