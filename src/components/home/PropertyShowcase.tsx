@@ -38,7 +38,7 @@ const rooms = [
   },
   {
     src: "/images/projects/mambourin/mambourin-4.jpg",
-    label: "Walk-in Robe",
+    label: "Lounge Room",
     span: "col-span-1 row-span-1",
     mobileSpan: "col-span-1",
   },

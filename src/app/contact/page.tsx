@@ -74,7 +74,7 @@ export default function ContactPage() {
  <svg className="w-5 h-5 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="#DC2626" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
  <div>
  <p className="font-semibold" style={{ color: "#FFFFFF" }}>
- 0409 005 554
+ +61 489 995 725
  </p>
  <p className="text-sm" style={{ color: "#A3A3A3" }}>
  Call for a same-day callback
@@ -149,10 +149,10 @@ export default function ContactPage() {
  waiting, no phone tag.
  </p>
  <a
- href="tel:0409005554"
+ href="tel:+61489995725"
  className="btn-primary w-full text-center"
  >
- Call 0409 005 554 Now
+ Call +61 489 995 725 Now
  </a>
  <p
  className="text-xs mt-3 text-center"

@@ -48,10 +48,10 @@ export default function CTABand({ serviceName, slug }: CTABandProps) {
       Book My Free Assessment
      </Link>
      <a
-      href="tel:0409005554"
+      href="tel:+61489995725"
       className="btn-secondary text-base px-8 py-4"
      >
-      Call 0409 005 554
+      Call +61 489 995 725
      </a>
     </div>
 

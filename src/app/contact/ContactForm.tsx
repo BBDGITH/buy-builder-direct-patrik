@@ -173,7 +173,7 @@ export default function ContactForm() {
    setSubmitted(true);
   } catch {
    setApiError(
-    "Network error. Please check your connection or call us on 0409 005 554."
+    "Network error. Please check your connection or call us on +61 489 995 725."
    );
   } finally {
    setSubmitting(false);

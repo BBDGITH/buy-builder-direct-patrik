@@ -350,7 +350,7 @@ export default function AboutPage() {
             <p className="text-lg mb-8" style={{ color: "#A3A3A3" }}>Free savings assessment. No obligation. No agent fees.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/contact" className="btn-primary text-base px-8 py-4">Get My Free Assessment</Link>
-              <a href="tel:0409005554" className="btn-secondary text-base px-8 py-4">Call 0409 005 554</a>
+              <a href="tel:+61489995725" className="btn-secondary text-base px-8 py-4">Call +61 489 995 725</a>
             </div>
           </motion.div>
         </div>

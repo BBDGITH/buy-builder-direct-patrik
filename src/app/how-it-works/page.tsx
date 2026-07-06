@@ -613,11 +613,11 @@ export default function HowItWorksPage() {
               Book My Free Assessment
             </Link>
             <a
-              href="tel:0409005554"
+              href="tel:+61489995725"
               className="text-base font-semibold transition-colors"
               style={{ color: "rgba(255,255,255,0.6)" }}
             >
-              or call 0409 005 554 →
+              or call +61 489 995 725 →
             </a>
           </motion.div>
         </div>

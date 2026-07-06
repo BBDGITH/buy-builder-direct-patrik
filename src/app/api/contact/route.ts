@@ -95,7 +95,7 @@ function buildConfirmationHtml(data: z.infer<typeof ContactSchema>): string {
     <hr style="border:none;border-top:1px solid #e5e5e5;margin:24px 0">
     <p style="font-size:13px;color:#888888;margin:0 0 6px;text-align:center">Prefer to talk now?</p>
     <p style="font-size:15px;font-weight:700;text-align:center;margin:0">
-      <a href="tel:0409005554" style="color:#DC2626;text-decoration:none">0409 005 554</a>
+      <a href="tel:+61489995725" style="color:#DC2626;text-decoration:none">+61 489 995 725</a>
     </p>
   </div>
   <div style="text-align:center;padding:16px 0 0">
@@ -257,7 +257,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         error:
-          "Failed to send your message. Please try again or call us on 0409 005 554.",
+          "Failed to send your message. Please try again or call us on +61 489 995 725.",
       },
       { status: 500 }
     );

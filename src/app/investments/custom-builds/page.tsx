@@ -131,8 +131,8 @@ export default function CustomBuildsPage() {
  <Link href="/contact?type=custom-builds" className="btn-primary text-base px-7 py-4">
  Get My Free Assessment
  </Link>
- <a href="tel:0409005554" className="btn-secondary text-base px-7 py-4">
- 0409 005 554
+ <a href="tel:+61489995725" className="btn-secondary text-base px-7 py-4">
+ +61 489 995 725
  </a>
  </div>
  </motion.div>

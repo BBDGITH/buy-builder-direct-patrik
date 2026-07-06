@@ -262,11 +262,11 @@ export default function DisclaimerPage() {
           <p className="mt-1 text-base" style={{ color: "#A3A3A3" }}>
            Phone:{" "}
            <a
-            href="tel:0409005554"
+            href="tel:+61489995725"
             className="underline underline-offset-2"
             style={{ color: "#DC2626" }}
            >
-            0409 005 554
+            +61 489 995 725
            </a>
           </p>
           <p className="mt-3 text-sm" style={{ color: "#666666" }}>
