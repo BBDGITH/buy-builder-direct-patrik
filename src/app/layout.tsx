@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Playfair_Display, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Header, Footer, StickyMobileCTA } from "@/components/layout";
+import { LatestBlogs } from "@/components/home";
 
 const playfair = Playfair_Display({
  subsets: ["latin"],
@@ -74,7 +75,7 @@ export const metadata: Metadata = {
    "Save up to 15% on your investment property by buying direct from Australian builders. No agents. No markups.",
   images: [
    {
-    url: "/images/runge-st/exterior-01.jpg",
+    url: "/images/projects/mambourin/mambourin-1.jpg",
     width: 1200,
     height: 630,
     alt: "Buy Builder Direct — Premium investment property, direct from builder",
@@ -86,7 +87,7 @@ export const metadata: Metadata = {
   title: "Buy Builder Direct | Deal Direct — Save Up To 15%",
   description:
    "Save up to 15% on your investment property. Direct to builder. No agents. No markups.",
-  images: ["/images/runge-st/exterior-01.jpg"],
+  images: ["/images/projects/mambourin/mambourin-1.jpg"],
   creator: "@buybuilderdirect",
  },
  alternates: {
@@ -120,6 +121,7 @@ export default function RootLayout({
    <body className="min-h-full flex flex-col">
     <Header />
     <main className="flex-1">{children}</main>
+    <LatestBlogs />
     <Footer />
     <StickyMobileCTA />
    </body>

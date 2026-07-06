@@ -25,7 +25,7 @@ const steps = [
  number: 4,
  title: "Transparent Transaction",
  description:
- "Fixed-price contracts, builder invoices, no hidden fees. You see exactly what you're paying and why.",
+ "Fixed-price contracts, no hidden fees. You see exactly what you're paying and why.",
  },
  {
  number: 5,

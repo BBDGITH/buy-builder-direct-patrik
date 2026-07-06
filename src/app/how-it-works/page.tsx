@@ -269,7 +269,7 @@ export default function HowItWorksPage() {
       {/* ══ HERO — full-bleed image ══════════════════════════════════════ */}
       <section className="relative overflow-hidden" style={{ height: "75vh", minHeight: "520px" }}>
         <Image
-          src="/images/runge-st/exterior-01.jpg"
+          src="/images/projects/mambourin/mambourin-1.jpg"
           alt="Premium investment property — Buy Builder Direct"
           fill
           priority
@@ -557,7 +557,7 @@ export default function HowItWorksPage() {
       {/* ══ CTA — image background ═══════════════════════════════════════ */}
       <section className="relative overflow-hidden" style={{ minHeight: "420px" }}>
         <Image
-          src="/images/runge-st/bedroom-staged-02.jpg"
+          src="/images/projects/deer-park/deer-park-2.jpg"
           alt="Rent-ready investment property interior"
           fill
           className="object-cover"

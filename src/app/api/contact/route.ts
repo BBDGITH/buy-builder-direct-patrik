@@ -56,6 +56,58 @@ function sanitize(str: string): string {
   return str.replace(/<[^>]*>/g, "").replace(/[<>]/g, "").trim();
 }
 
+function buildConfirmationHtml(data: z.infer<typeof ContactSchema>): string {
+  const row = (label: string, value: string) =>
+    value
+      ? `<tr>
+          <td style="padding:5px 0;color:#888888;width:130px;font-size:13px">${label}</td>
+          <td style="padding:5px 0;color:#1a1a1a;font-weight:600;font-size:13px">${value}</td>
+        </tr>`
+      : "";
+
+  return `<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"></head>
+<body style="font-family:Arial,sans-serif;color:#1a1a1a;max-width:600px;margin:0 auto;background:#f4f4f4;padding:24px">
+  <div style="background:#0A0A0A;padding:24px;border-radius:8px 8px 0 0;text-align:center">
+    <p style="color:#DC2626;font-size:12px;font-weight:700;letter-spacing:2px;margin:0 0 8px;text-transform:uppercase">Buy Builder Direct</p>
+    <h1 style="color:#ffffff;margin:0;font-size:22px;font-weight:700">Thanks for reaching out, ${data.firstName}!</h1>
+  </div>
+  <div style="background:#ffffff;border:1px solid #e5e5e5;border-top:none;padding:28px 24px;border-radius:0 0 8px 8px">
+    <p style="font-size:15px;line-height:1.6;color:#333333;margin:0 0 20px">
+      We've received your enquiry and one of our team members will be in touch with you shortly &mdash; usually within <strong>1 business day</strong>.
+    </p>
+    ${data.investmentType || data.budget || data.state ? `
+    <div style="background:#f9f9f9;border:1px solid #e5e5e5;border-radius:6px;padding:18px 20px;margin-bottom:24px">
+      <p style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#DC2626;margin:0 0 12px">Your Enquiry Summary</p>
+      <table style="width:100%;border-collapse:collapse">
+        ${data.investmentType ? row("Investment Type", data.investmentType) : ""}
+        ${data.budget ? row("Budget", data.budget) : ""}
+        ${data.state ? row("State", data.state) : ""}
+      </table>
+    </div>` : ""}
+    <div style="text-align:center;margin-bottom:24px">
+      <p style="font-size:14px;color:#555555;margin:0 0 14px">In the meantime, explore our investment options:</p>
+      <a href="https://buybuilderdirect.com.au/investments" style="display:inline-block;background:#DC2626;color:#ffffff;text-decoration:none;padding:12px 28px;border-radius:6px;font-weight:700;font-size:14px">
+        View Investment Options &rarr;
+      </a>
+    </div>
+    <hr style="border:none;border-top:1px solid #e5e5e5;margin:24px 0">
+    <p style="font-size:13px;color:#888888;margin:0 0 6px;text-align:center">Prefer to talk now?</p>
+    <p style="font-size:15px;font-weight:700;text-align:center;margin:0">
+      <a href="tel:0409005554" style="color:#DC2626;text-decoration:none">0409 005 554</a>
+    </p>
+  </div>
+  <div style="text-align:center;padding:16px 0 0">
+    <p style="font-size:11px;color:#aaaaaa;margin:0">
+      &copy; ${new Date().getFullYear()} Buy Builder Direct &middot; buybuilderdirect.com.au<br>
+      This is an automated confirmation. Please do not reply to this email.
+    </p>
+  </div>
+</body>
+</html>`;
+}
+
 function buildEmailHtml(data: z.infer<typeof ContactSchema>): string {
   const row = (label: string, value: string) =>
     value
@@ -162,22 +214,43 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true });
   }
 
+  const resendHeaders = {
+    "Authorization": `Bearer ${apiKey}`,
+    "Content-Type": "application/json",
+  };
+
   try {
-    const response = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: `Buy Builder Direct <${fromEmail}>`,
-        to: [toEmail],
-        reply_to: data.email,
-        subject: `New ${data.formType === "lead" ? "Lead" : "Enquiry"} — ${firstName} ${lastName}`,
-        html: buildEmailHtml(cleanData),
+    // Send both emails in parallel
+    const [notifyRes, confirmRes] = await Promise.all([
+      // Notification to Patrik
+      fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: resendHeaders,
+        body: JSON.stringify({
+          from: `Buy Builder Direct <${fromEmail}>`,
+          to: [toEmail],
+          reply_to: data.email,
+          subject: `New ${data.formType === "lead" ? "Lead" : "Enquiry"} \u2014 ${firstName} ${lastName}`,
+          html: buildEmailHtml(cleanData),
+        }),
       }),
-    });
-    if (!response.ok) throw new Error(`Resend API error: ${response.status}`);
+      // Confirmation to customer
+      fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: resendHeaders,
+        body: JSON.stringify({
+          from: `Buy Builder Direct <${fromEmail}>`,
+          to: [data.email],
+          subject: `We've received your enquiry \u2014 Buy Builder Direct`,
+          html: buildConfirmationHtml(cleanData),
+        }),
+      }),
+    ]);
+
+    if (!notifyRes.ok) throw new Error(`Resend notify error: ${notifyRes.status}`);
+    // Log confirmation failure but don't block success response
+    if (!confirmRes.ok) console.error(`Resend confirmation error: ${confirmRes.status}`);
+
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("Resend error:", err);

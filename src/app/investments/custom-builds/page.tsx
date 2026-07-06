@@ -144,7 +144,7 @@ export default function CustomBuildsPage() {
  className="relative block rounded-2xl overflow-hidden h-64 sm:h-80 lg:h-[480px]"
  >
  <Image
- src="/images/runge-st/kitchen-01.jpg"
+ src="/images/projects/doreen/doreen-3.jpg"
  alt="Custom build — bespoke kitchen finishes"
  fill
  priority

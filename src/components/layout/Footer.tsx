@@ -130,13 +130,13 @@ export default function Footer() {
        info@buybuilderdirect.com.au
       </a>
       <a
-       href="tel:0409005554"
+       href="tel:+61489995725"
        className="mt-2 flex items-center gap-2 text-sm text-[#A3A3A3] hover:text-[#DC2626] transition-colors duration-200"
       >
        <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
        </svg>
-       0409 005 554
+       +61 489 995 725
       </a>
      </div>
 
@@ -157,11 +157,8 @@ export default function Footer() {
     style={{ borderColor: "rgba(220,38,38,0.15)" }}
    >
     <div className="container-site py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-     <p className="text-xs text-[#666666] text-center sm:text-left">
-      &copy; 2025 Buy Builder Direct. ABN: XX XXX XXX XXX. All rights reserved.
-     </p>
-     <p className="text-xs text-[#666666] text-center sm:text-right max-w-sm">
-      Not financial advice. Property investment involves risk. Seek independent advice.
+     <p className="text-xs text-[#666666] text-center sm:text-left w-full sm:text-center">
+      &copy; 2025 Buy Builder Direct. All rights reserved.
      </p>
     </div>
    </div>

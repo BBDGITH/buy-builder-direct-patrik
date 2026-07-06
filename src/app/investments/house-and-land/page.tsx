@@ -144,7 +144,7 @@ export default function HouseAndLandPage() {
  className="relative block rounded-2xl overflow-hidden h-64 sm:h-80 lg:h-[480px]"
  >
  <Image
- src="/images/runge-st/exterior-03.jpg"
+ src="/images/projects/birdsmouth-la/birdsmouth-la-1.jpg"
  alt="House and land investment — exterior front view"
  fill
  priority

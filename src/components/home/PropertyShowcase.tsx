@@ -6,48 +6,48 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 
 const rooms = [
- {
-  src: "/images/runge-st/exterior-02.jpg",
-  label: "Exterior",
-  span: "col-span-2 row-span-2",
-  mobileSpan: "col-span-2",
- },
- {
-  src: "/images/runge-st/kitchen-01.jpg",
-  label: "Kitchen",
-  span: "col-span-1 row-span-1",
-  mobileSpan: "col-span-1",
- },
- {
-  src: "/images/runge-st/bathroom-01.jpg",
-  label: "Bathroom",
-  span: "col-span-1 row-span-1",
-  mobileSpan: "col-span-1",
- },
- {
-  src: "/images/runge-st/virtual-staged-01.jpg",
-  label: "Living & Dining",
-  span: "col-span-1 row-span-1",
-  mobileSpan: "col-span-1",
- },
- {
-  src: "/images/runge-st/bedroom-staged-01.jpg",
-  label: "Master Bedroom",
-  span: "col-span-1 row-span-1",
-  mobileSpan: "col-span-1",
- },
- {
-  src: "/images/runge-st/walkin-robe-01.jpg",
-  label: "Walk-in Robe",
-  span: "col-span-1 row-span-1",
-  mobileSpan: "col-span-1",
- },
- {
-  src: "/images/runge-st/bedroom-staged-03.jpg",
-  label: "Second Bedroom",
-  span: "col-span-1 row-span-1",
-  mobileSpan: "col-span-1",
- },
+  {
+    src: "/images/projects/shepparton/shepparton-1.jpg",
+    label: "Exterior",
+    span: "col-span-2 row-span-2",
+    mobileSpan: "col-span-2",
+  },
+  {
+    src: "/images/projects/doreen/doreen-3.jpg",
+    label: "Kitchen",
+    span: "col-span-1 row-span-1",
+    mobileSpan: "col-span-1",
+  },
+  {
+    src: "/images/projects/mambourin/mambourin-11.jpg",
+    label: "Bathroom",
+    span: "col-span-1 row-span-1",
+    mobileSpan: "col-span-1",
+  },
+  {
+    src: "/images/projects/doreen/doreen-7.jpg",
+    label: "Living & Dining",
+    span: "col-span-1 row-span-1",
+    mobileSpan: "col-span-1",
+  },
+  {
+    src: "/images/projects/deer-park/deer-park-2.jpg",
+    label: "Master Bedroom",
+    span: "col-span-1 row-span-1",
+    mobileSpan: "col-span-1",
+  },
+  {
+    src: "/images/projects/mambourin/mambourin-4.jpg",
+    label: "Walk-in Robe",
+    span: "col-span-1 row-span-1",
+    mobileSpan: "col-span-1",
+  },
+  {
+    src: "/images/projects/deer-park/deer-park-5.jpg",
+    label: "Second Bedroom",
+    span: "col-span-1 row-span-1",
+    mobileSpan: "col-span-1",
+  },
 ];
 
 function ImageCard({
@@ -237,7 +237,86 @@ export default function PropertyShowcase() {
       Get Free Assessment
      </Link>
     </motion.div>
-   </div>
-  </section>
- );
+    </div>
+
+    {/* Floor Plans Section */}
+    <div className="mt-24 pt-16 border-t border-[rgba(220,38,38,0.2)] text-center">
+     <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+     >
+      <p
+       className="mb-3 text-xs font-semibold uppercase tracking-widest"
+       style={{ color: "#DC2626" }}
+      >
+       Example Layouts
+      </p>
+      <h2
+       className="text-3xl font-bold md:text-4xl"
+       style={{ fontFamily: "var(--font-display)", color: "#FFFFFF" }}
+      >
+       High-Yield Floor Plans
+      </h2>
+      <p className="mt-4 text-lg max-w-2xl mx-auto" style={{ color: "#A3A3A3" }}>
+       Purpose-built co-living and rooming house designs optimized for maximum rental yield and tenant comfort.
+      </p>
+     </motion.div>
+
+     <div className="mt-12 grid md:grid-cols-2 gap-8">
+      {/* Greenfield */}
+      <motion.div
+       initial={{ opacity: 0, x: -20 }}
+       whileInView={{ opacity: 1, x: 0 }}
+       viewport={{ once: true }}
+       transition={{ duration: 0.5, delay: 0.2 }}
+       className="rounded-xl overflow-hidden shadow-2xl"
+       style={{ border: "1px solid rgba(255,255,255,0.1)", background: "#1C1C1C" }}
+      >
+       <div className="relative w-full aspect-[4/3] bg-white">
+        <Image
+         src="/images/floorplan-greenfield.png"
+         alt="Greenfield Site Floor Plan"
+         fill
+         className="object-contain"
+        />
+       </div>
+       <div className="p-6 text-left border-t border-white/10">
+        <h3 className="text-xl font-bold text-white mb-2">Greenfield Site</h3>
+        <p className="text-gray-400 text-sm">
+         Minimum block size: 16X32 &middot; House Size: 295sqm &middot; 9 Bedrooms
+        </p>
+       </div>
+      </motion.div>
+
+      {/* Brownfield */}
+      <motion.div
+       initial={{ opacity: 0, x: 20 }}
+       whileInView={{ opacity: 1, x: 0 }}
+       viewport={{ once: true }}
+       transition={{ duration: 0.5, delay: 0.4 }}
+       className="rounded-xl overflow-hidden shadow-2xl"
+       style={{ border: "1px solid rgba(255,255,255,0.1)", background: "#1C1C1C" }}
+      >
+       <div className="relative w-full aspect-[4/3] bg-white">
+        <Image
+         src="/images/floorplan-brownfield.png"
+         alt="Brownfield Infill Site Floor Plan"
+         fill
+         className="object-contain"
+        />
+       </div>
+       <div className="p-6 text-left border-t border-white/10">
+        <h3 className="text-xl font-bold text-white mb-2">9x9 Brownfield/Infill Site</h3>
+        <p className="text-gray-400 text-sm">
+         Minimum block size: 550sqm &middot; House Size: 295sqm &middot; 9 Bedrooms
+        </p>
+       </div>
+      </motion.div>
+     </div>
+    </div>
+
+   </section>
+  );
 }

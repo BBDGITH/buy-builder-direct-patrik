@@ -129,7 +129,7 @@ export default function AboutPage() {
               {/* Main image */}
               <div className="absolute inset-0 rounded-2xl overflow-hidden"
                 style={{ right: "0", bottom: "40px", top: "0", left: "20px", boxShadow: "0 24px 64px rgba(0,0,0,0.6)", border: "1px solid rgba(220,38,38,0.2)" }}>
-                <Image src="/images/runge-st/exterior-01.jpg" alt="Investment property by Buy Builder Direct"
+                <Image src="/images/projects/mambourin/mambourin-1.jpg" alt="Investment property by Buy Builder Direct"
                   fill className="object-cover" sizes="500px" priority />
                 <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(10,10,10,0.5) 0%, transparent 60%)" }} />
               </div>
@@ -137,7 +137,7 @@ export default function AboutPage() {
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.9 }}
                 className="absolute bottom-0 left-0 rounded-xl overflow-hidden shadow-2xl"
                 style={{ width: "180px", height: "130px", border: "2px solid rgba(220,38,38,0.3)" }}>
-                <Image src="/images/runge-st/bedroom-staged-02.jpg" alt="Premium bedroom finish"
+                <Image src="/images/projects/deer-park/deer-park-2.jpg" alt="Premium bedroom finish"
                   fill className="object-cover" sizes="180px" />
                 <div className="absolute inset-0 flex items-end p-2.5"
                   style={{ background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 55%)" }}>
@@ -193,7 +193,7 @@ export default function AboutPage() {
             <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
               transition={{ duration: 0.8 }} className="relative rounded-2xl overflow-hidden order-2 lg:order-1"
               style={{ height: "440px", border: "1px solid rgba(220,38,38,0.15)" }}>
-              <Image src="/images/runge-st/exterior-02.jpg" alt="Our mission — direct builder relationships"
+              <Image src="/images/projects/shepparton/shepparton-1.jpg" alt="Our mission — direct builder relationships"
                 fill className="object-cover" sizes="600px" />
               <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(10,10,10,0.4) 0%, transparent 60%)" }} />
               {/* Floating quote */}

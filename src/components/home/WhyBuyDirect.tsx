@@ -12,7 +12,7 @@ const benefits = [
  {
  title: "Transparent Pricing",
  description:
- "Builder invoices, no hidden fees, fixed-price contracts. You see exactly what you pay and why — before you sign anything.",
+ "No hidden fees, fixed-price contracts. You see exactly what you pay and why — before you sign anything.",
  },
  {
  title: "Quality Builders",
@@ -26,7 +26,14 @@ const benefits = [
  },
 ];
 
-const comparisonRows = [
+type ComparisonRow = {
+ factor: string;
+ agent: string;
+ bbd: string;
+ highlight?: boolean;
+};
+
+const comparisonRows: ComparisonRow[] = [
  {
  factor: "Purchase Price",
  agent: "Retail + agent markup (up to 10%)",
@@ -45,18 +52,12 @@ const comparisonRows = [
  {
  factor: "Price Transparency",
  agent: "Limited — you see the end price only",
- bbd: "Full builder invoice visibility",
+ bbd: "Detailed cost breakdown",
  },
  {
  factor: "Builder Relationship",
  agent: "Agent is the intermediary",
  bbd: "Direct relationship with builder",
- },
- {
- factor: "Total Estimated Saving",
- agent: "—",
- bbd: "Up to 15% on purchase price",
- highlight: true,
  },
 ];
 

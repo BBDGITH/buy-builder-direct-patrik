@@ -145,7 +145,7 @@ export default function RoomingHousesPage() {
  className="relative block rounded-2xl overflow-hidden h-64 sm:h-80 lg:h-[480px]"
  >
  <Image
- src="/images/runge-st/bedroom-staged-02.jpg"
+ src="/images/projects/deer-park/deer-park-5.jpg"
  alt="Rooming house investment — staged bedroom"
  fill
  priority

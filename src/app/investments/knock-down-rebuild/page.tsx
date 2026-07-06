@@ -97,7 +97,7 @@ export default function KnockDownRebuildPage() {
       </div>
       <div className="relative rounded-2xl overflow-hidden" style={{ height: "420px", border: "1px solid rgba(220,38,38,0.2)" }}>
        <Image
-        src="/images/runge-st/exterior-01.jpg"
+        src="/images/projects/mambourin/mambourin-16.jpg"
         alt="Knock Down and Rebuild project"
         fill
         className="object-cover"

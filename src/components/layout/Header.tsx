@@ -18,8 +18,10 @@ const navLinks = [
  { label: "Home", href: "/" },
  { label: "Investments", href: "/investments", hasDropdown: true },
  { label: "How It Works", href: "/how-it-works" },
+ { label: "Gallery", href: "/gallery" },
  { label: "About", href: "/about" },
  { label: "FAQ", href: "/faq" },
+ { label: "Blog", href: "/blog" },
  { label: "Contact", href: "/contact" },
 ];
 
@@ -136,11 +138,11 @@ export default function Header() {
  {/* ── Desktop Right: phone + CTA ── */}
  <div className="hidden lg:flex items-center gap-4 shrink-0">
  <a
- href="tel:0409005554"
- className="text-sm text-white/70 hover:text-white transition-colors"
- aria-label="Call 0409 005 554"
+  href="tel:+61489995725"
+  className="text-sm text-white/70 hover:text-white transition-colors"
+  aria-label="Call +61 489 995 725"
  >
- 0409 005 554
+  +61 489 995 725
  </a>
  <Link href="/contact" className="btn-primary text-sm px-5 py-2.5">
  Get Free Assessment
@@ -260,10 +262,10 @@ export default function Header() {
  {/* Drawer footer CTA */}
  <div className="px-6 py-6 border-t border-[rgba(220,38,38,0.15)] space-y-3">
  <a
- href="tel:0409005554"
- className="flex items-center justify-center gap-2 w-full py-3 rounded-lg border border-white/20 text-white text-sm font-medium hover:bg-white/5 transition-colors"
+  href="tel:+61489995725"
+  className="flex items-center justify-center gap-2 w-full py-3 rounded-lg border border-white/20 text-white text-sm font-medium hover:bg-white/5 transition-colors"
  >
- 0409 005 554
+  +61 489 995 725
  </a>
  <Link
  href="/contact"

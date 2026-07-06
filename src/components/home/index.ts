@@ -10,4 +10,5 @@ export { default as StatCounters } from "./StatCounters";
 export { default as Testimonials } from "./Testimonials";
 export { default as FAQPreview } from "./FAQPreview";
 export { default as LeadCapture } from "./LeadCapture";
+export { default as LatestBlogs } from "./LatestBlogs";
 export { default as PropertyShowcase } from "./PropertyShowcase";

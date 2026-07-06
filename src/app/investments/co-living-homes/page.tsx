@@ -145,7 +145,7 @@ export default function CoLivingHomesPage() {
  className="relative block rounded-2xl overflow-hidden h-64 sm:h-80 lg:h-[480px]"
  >
  <Image
- src="/images/runge-st/living-01.jpg"
+ src="/images/projects/doreen/doreen-7.jpg"
  alt="Co-living investment property interior"
  fill
  priority

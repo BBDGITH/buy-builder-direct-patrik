@@ -4,10 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
 
-const trustBadges = [
- { label: "15% Avg. Savings" },
- { label: "Nationwide" },
- { label: "No Agent Fees" },
+ const trustBadges = [
+  { label: "Save $$$" },
+  { label: "Nationwide" },
+  { label: "No Agent Fees" },
  { label: "Vetted Builders" },
 ];
 
@@ -94,9 +94,8 @@ export default function HeroSection() {
        className="max-w-4xl text-5xl font-bold leading-tight md:text-6xl lg:text-7xl"
        style={{ fontFamily: "var(--font-display)", color: "#FFFFFF" }}
       >
-       Save Up To{" "}
-       <span style={{ color: "#DC2626" }}>15%</span>
-       {" "}— Deal Direct With Builders
+       Buy Direct From The Builder and{" "}
+       <span style={{ color: "#DC2626" }}>Save</span>
       </motion.h1>
 
       {/* Subheading */}
@@ -173,7 +172,7 @@ export default function HeroSection() {
        }}
       >
        <Image
-        src="/images/runge-st/exterior-01.jpg"
+        src="/images/projects/shepparton/shepparton-1.jpg"
         alt="Premium investment property by Buy Builder Direct"
         fill
         className="object-cover"
@@ -217,7 +216,7 @@ export default function HeroSection() {
         minWidth: "150px",
        }}
       >
-       <p className="text-2xl font-bold" style={{ color: "#DC2626", fontFamily: "var(--font-display)" }}>15%</p>
+       <p className="text-2xl font-bold" style={{ color: "#DC2626", fontFamily: "var(--font-display)" }}>Save $$$</p>
        <p className="text-xs mt-0.5" style={{ color: "#A3A3A3" }}>Average savings<br />vs agent price</p>
       </motion.div>
 
@@ -231,7 +230,7 @@ export default function HeroSection() {
        style={{ border: "2px solid rgba(220,38,38,0.3)" }}
       >
        <Image
-        src="/images/runge-st/living-01.jpg"
+        src="/images/projects/doreen/doreen-7.jpg"
         alt="Premium interior finish"
         fill
         className="object-cover"

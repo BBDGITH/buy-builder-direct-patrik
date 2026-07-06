@@ -145,7 +145,7 @@ export default function SdaNdisHomesPage() {
  className="relative block rounded-2xl overflow-hidden h-64 sm:h-80 lg:h-[480px]"
  >
  <Image
- src="/images/runge-st/bathroom-02.jpg"
+ src="/images/projects/mambourin/mambourin-11.jpg"
  alt="SDA NDIS investment property — accessible bathroom"
  fill
  priority

@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
+import FinancialCalculator from "../shared/FinancialCalculator";
 
 const investmentTypes = [
  "Co-Living Homes",
@@ -96,7 +97,7 @@ export default function LeadCapture() {
 
    setSubmitted(true);
   } catch {
-   setApiError("Network error. Please call us on 0409 005 554.");
+   setApiError("Network error. Please call us on +61 489 995 725.");
   } finally {
    setSubmitting(false);
   }
@@ -313,7 +314,7 @@ export default function LeadCapture() {
        </p>
 
        <a
-        href="tel:0409005554"
+        href="tel:+61489995725"
         className="flex items-center gap-3 mb-2 group"
         style={{ color: "#FFFFFF" }}
        >
@@ -326,7 +327,7 @@ export default function LeadCapture() {
          </svg>
         </span>
         <div>
-         <p className="font-bold text-lg group-hover:text-[#DC2626] transition-colors">0409 005 554</p>
+         <p className="font-bold text-lg group-hover:text-[#DC2626] transition-colors">+61 489 995 725</p>
          <p className="text-xs" style={{ color: "#A3A3A3" }}>
           Call for a same-day callback
          </p>
@@ -357,6 +358,28 @@ export default function LeadCapture() {
       </div>
      </motion.div>
     </div>
+
+    {/* Financial Calculator Section */}
+    <motion.div
+     initial={{ opacity: 0, y: 30 }}
+     whileInView={{ opacity: 1, y: 0 }}
+     viewport={{ once: true }}
+     transition={{ duration: 0.6, delay: 0.2 }}
+     className="mt-20 pt-16 border-t border-[rgba(220,38,38,0.2)]"
+    >
+      <div className="text-center mb-10">
+        <h2
+          className="text-3xl font-bold md:text-4xl"
+          style={{ fontFamily: "var(--font-display)", color: "#FFFFFF" }}
+        >
+          Calculate Your Potential Returns
+        </h2>
+        <p className="text-lg mt-4" style={{ color: "#A3A3A3" }}>
+          See how a direct-to-builder investment can accelerate your cashflow.
+        </p>
+      </div>
+      <FinancialCalculator />
+    </motion.div>
    </div>
   </section>
  );

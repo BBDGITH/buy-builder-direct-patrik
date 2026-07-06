@@ -6,53 +6,60 @@ import { motion } from "framer-motion";
 
 const pathways = [
   {
-    title: "Co-Living Homes",
-    yield: "6–12% yield",
-    description: "High-yield multi-room properties built for the modern rental market — up to 4× a standard tenancy income.",
-    href: "/investments/co-living-homes",
-    image: "/images/runge-st/living-01.jpg",
-  },
-  {
-    title: "Rooming Houses",
-    yield: "8–14% yield",
-    description: "Multiple income streams under one roof. Victoria's highest-yielding residential strategy.",
-    href: "/investments/rooming-houses",
-    image: "/images/runge-st/bedroom-staged-02.jpg",
-  },
-  {
-    title: "SDA / NDIS Homes",
-    yield: "8–15%+ yield",
-    description: "Government-backed NDIS income with long-term tenancies and genuine social impact.",
-    href: "/investments/sda-ndis-homes",
-    image: "/images/runge-st/bathroom-02.jpg",
-  },
-  {
-    title: "House & Land",
-    yield: "4–7% yield",
-    description: "Fixed-price turnkey packages across Australia's strongest growth corridors.",
-    href: "/investments/house-and-land",
-    image: "/images/runge-st/exterior-03.jpg",
-  },
-  {
+    id: "custom-builds",
     title: "Custom Builds",
+    description: "Tailored investment properties on your land or ours. Designed for maximum yield and tenant appeal.",
+    image: "/images/projects/doreen/doreen-7.jpg",
+    link: "/investments/custom-builds",
     yield: "Your design",
-    description: "Your vision, your specs — at wholesale builder rates with zero agent markup.",
-    href: "/investments/custom-builds",
-    image: "/images/runge-st/kitchen-01.jpg",
   },
   {
-    title: "Developments",
+    id: "developments",
+    title: "Unit Developments",
+    description: "From duplexes to multi-unit sites, we manage the end-to-end process of developing high-return properties.",
+    image: "/images/projects/deer-park/deer-park-2.jpg",
+    link: "/investments/developments",
     yield: "5–10%+ yield",
-    description: "Multi-unit and knockdown-rebuild projects — one deal, multiple income streams.",
-    href: "/investments/developments",
-    image: "/images/runge-st/exterior-04.jpg",
   },
   {
+    id: "sda-ndis",
+    title: "SDA & NDIS Homes",
+    description: "Purpose-built, compliant Specialist Disability Accommodation delivering secure, government-backed returns.",
+    image: "/images/projects/mambourin/mambourin-11.jpg",
+    link: "/investments/sda-ndis-homes",
+    yield: "8–15%+ yield",
+  },
+  {
+    id: "house-land",
+    title: "House & Land Packages",
+    description: "Turnkey investment packages in high-growth corridors. Fixed price, builder-direct value.",
+    image: "/images/projects/birdsmouth-la/birdsmouth-la-1.jpg",
+    link: "/investments/house-and-land",
+    yield: "4–7% yield",
+  },
+  {
+    id: "co-living",
+    title: "Co-Living Homes",
+    description: "Optimized residential designs that increase rental yield by catering to multiple independent tenants.",
+    image: "/images/projects/doreen/doreen-3.jpg",
+    link: "/investments/co-living-homes",
+    yield: "6–12% yield",
+  },
+  {
+    id: "knock-down",
     title: "Knock Down & Rebuild",
+    description: "Unlock the value of your existing block. We replace aging properties with high-performing investments.",
+    image: "/images/projects/rowville/rowville-1.jpg",
+    link: "/investments/knock-down-rebuild",
     yield: "Up to 15% saving",
-    description: "Demolish the old, build premium new — on your land, direct from builder.",
-    href: "/investments/knock-down-rebuild",
-    image: "/images/runge-st/exterior-02.jpg",
+  },
+  {
+    id: "rooming-houses",
+    title: "Rooming Houses (Class 1B)",
+    description: "High cash-flow, multi-income properties built to strict Class 1B commercial standards for maximum ROI.",
+    image: "/images/projects/deer-park/deer-park-5.jpg",
+    link: "/investments/rooming-houses",
+    yield: "8–14% yield",
   },
 ];
 
@@ -89,7 +96,7 @@ export default function PathwayCards() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pathway-grid">
           {pathways.map((p, i) => (
             <motion.div
-              key={p.href}
+              key={p.link}
               className={`${i === 0 ? "sm:col-span-2 lg:row-span-2 min-h-[220px] sm:min-h-[524px] lg:min-h-[564px]" : "min-h-[200px] sm:min-h-[260px] lg:min-h-[280px]"}`}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -97,7 +104,7 @@ export default function PathwayCards() {
               transition={{ duration: 0.5, delay: i * 0.06 }}
             >
               <Link
-                href={p.href}
+                href={p.link}
                 className="group relative block w-full h-full overflow-hidden rounded-2xl cursor-pointer"
                 style={{ height: "100%" }}
               >
