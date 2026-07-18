@@ -184,7 +184,7 @@ export default function HouseAndLandPage() {
  — including builder promotions, upgrade incentives, and preferred-partner pricing —
  that are simply not available to retail buyers walking into a display home. Major
  builders offer exclusive pricing to volume partners, and BBD passes that advantage
- directly to you. The 10–15% saving on a $700k package represents $70,000–$105,000 in
+ directly to you. Builder-direct pricing on a mid-range package can mean tens of thousands of $$$ in
  additional equity from day one.
  </p>
  <p>
@@ -214,7 +214,7 @@ export default function HouseAndLandPage() {
  {
  num: "01",
  title: "Exclusive Builder Access",
- body: "BBD has preferred-partner agreements with major residential builders. We access promotions and pricing that retail buyers never see — saving you 10–15% from the start.",
+ body: "BBD has preferred-partner agreements with major residential builders. We access promotions and pricing that retail buyers never see — keeping more $$$ in your deal from the start.",
  },
  {
  num: "02",

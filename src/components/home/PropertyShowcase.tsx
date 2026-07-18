@@ -7,43 +7,43 @@ import { useState } from "react";
 
 const rooms = [
   {
-    src: "/images/projects/shepparton/shepparton-1.jpg",
+    src: "/images/runge-st/exterior-01.jpg",
     label: "Exterior",
     span: "col-span-2 row-span-2",
     mobileSpan: "col-span-2",
   },
   {
-    src: "/images/projects/doreen/doreen-3.jpg",
+    src: "/images/runge-st/kitchen-01.jpg",
     label: "Kitchen",
     span: "col-span-1 row-span-1",
     mobileSpan: "col-span-1",
   },
   {
-    src: "/images/projects/mambourin/mambourin-11.jpg",
+    src: "/images/runge-st/bathroom-01.jpg",
     label: "Bathroom",
     span: "col-span-1 row-span-1",
     mobileSpan: "col-span-1",
   },
   {
-    src: "/images/projects/doreen/doreen-7.jpg",
+    src: "/images/runge-st/living-01.jpg",
     label: "Living & Dining",
     span: "col-span-1 row-span-1",
     mobileSpan: "col-span-1",
   },
   {
-    src: "/images/projects/deer-park/deer-park-2.jpg",
+    src: "/images/runge-st/bedroom-staged-01.jpg",
     label: "Master Bedroom",
     span: "col-span-1 row-span-1",
     mobileSpan: "col-span-1",
   },
   {
-    src: "/images/projects/mambourin/mambourin-4.jpg",
+    src: "/images/runge-st/living-02.jpg",
     label: "Lounge Room",
     span: "col-span-1 row-span-1",
     mobileSpan: "col-span-1",
   },
   {
-    src: "/images/projects/deer-park/deer-park-5.jpg",
+    src: "/images/runge-st/bedroom-staged-02.jpg",
     label: "Second Bedroom",
     span: "col-span-1 row-span-1",
     mobileSpan: "col-span-1",
@@ -237,10 +237,9 @@ export default function PropertyShowcase() {
       Get Free Assessment
      </Link>
     </motion.div>
-    </div>
 
-    {/* Floor Plans Section */}
-    <div className="mt-24 pt-16 border-t border-[rgba(220,38,38,0.2)] text-center">
+    {/* Floor Plans Section — kept inside container to avoid blank/unpadded stretch */}
+    <div className="mt-20 pt-14 border-t border-[rgba(220,38,38,0.2)] text-center">
      <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -265,7 +264,6 @@ export default function PropertyShowcase() {
      </motion.div>
 
      <div className="mt-12 grid md:grid-cols-2 gap-8">
-      {/* Greenfield */}
       <motion.div
        initial={{ opacity: 0, x: -20 }}
        whileInView={{ opacity: 1, x: 0 }}
@@ -290,7 +288,6 @@ export default function PropertyShowcase() {
        </div>
       </motion.div>
 
-      {/* Brownfield */}
       <motion.div
        initial={{ opacity: 0, x: 20 }}
        whileInView={{ opacity: 1, x: 0 }}
@@ -316,7 +313,7 @@ export default function PropertyShowcase() {
       </motion.div>
      </div>
     </div>
-
-   </section>
-  );
+   </div>
+  </section>
+ );
 }

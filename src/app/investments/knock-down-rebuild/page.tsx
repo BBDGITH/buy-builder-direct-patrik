@@ -17,7 +17,7 @@ const benefits = [
  {
   title: "Direct Builder Pricing",
   description:
-   "No agent in the middle means no markup. You deal directly with the builder from demolition to final handover, saving up to 15% on typical project costs.",
+   "No agent in the middle means no markup. You deal directly with the builder from demolition to final handover, keeping more $$$ on typical project costs.",
  },
  {
   title: "Full Design Control",

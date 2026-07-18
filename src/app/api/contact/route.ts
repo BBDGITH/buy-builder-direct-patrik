@@ -56,93 +56,194 @@ function sanitize(str: string): string {
   return str.replace(/<[^>]*>/g, "").replace(/[<>]/g, "").trim();
 }
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function buildConfirmationHtml(data: z.infer<typeof ContactSchema>): string {
-  const row = (label: string, value: string) =>
-    value
+  const firstName = escapeHtml(data.firstName);
+  const investmentType = escapeHtml(data.investmentType ?? "");
+  const budget = escapeHtml(data.budget ?? "");
+  const state = escapeHtml(data.state ?? "");
+  const year = new Date().getFullYear();
+
+  const summaryRows = [
+    investmentType
       ? `<tr>
-          <td style="padding:5px 0;color:#888888;width:130px;font-size:13px">${label}</td>
-          <td style="padding:5px 0;color:#1a1a1a;font-weight:600;font-size:13px">${value}</td>
+          <td style="padding:8px 0;color:#888888;width:140px;font-size:13px;font-family:Arial,sans-serif">Investment Type</td>
+          <td style="padding:8px 0;color:#1a1a1a;font-weight:600;font-size:13px;font-family:Arial,sans-serif">${investmentType}</td>
         </tr>`
-      : "";
+      : "",
+    budget
+      ? `<tr>
+          <td style="padding:8px 0;color:#888888;width:140px;font-size:13px;font-family:Arial,sans-serif">Budget</td>
+          <td style="padding:8px 0;color:#1a1a1a;font-weight:600;font-size:13px;font-family:Arial,sans-serif">${budget}</td>
+        </tr>`
+      : "",
+    state
+      ? `<tr>
+          <td style="padding:8px 0;color:#888888;width:140px;font-size:13px;font-family:Arial,sans-serif">State</td>
+          <td style="padding:8px 0;color:#1a1a1a;font-weight:600;font-size:13px;font-family:Arial,sans-serif">${state}</td>
+        </tr>`
+      : "",
+  ]
+    .filter(Boolean)
+    .join("");
 
   return `<!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"></head>
-<body style="font-family:Arial,sans-serif;color:#1a1a1a;max-width:600px;margin:0 auto;background:#f4f4f4;padding:24px">
-  <div style="background:#0A0A0A;padding:24px;border-radius:8px 8px 0 0;text-align:center">
-    <p style="color:#DC2626;font-size:12px;font-weight:700;letter-spacing:2px;margin:0 0 8px;text-transform:uppercase">Buy Builder Direct</p>
-    <h1 style="color:#ffffff;margin:0;font-size:22px;font-weight:700">Thanks for reaching out, ${data.firstName}!</h1>
-  </div>
-  <div style="background:#ffffff;border:1px solid #e5e5e5;border-top:none;padding:28px 24px;border-radius:0 0 8px 8px">
-    <p style="font-size:15px;line-height:1.6;color:#333333;margin:0 0 20px">
-      We've received your enquiry and one of our team members will be in touch with you shortly &mdash; usually within <strong>1 business day</strong>.
-    </p>
-    ${data.investmentType || data.budget || data.state ? `
-    <div style="background:#f9f9f9;border:1px solid #e5e5e5;border-radius:6px;padding:18px 20px;margin-bottom:24px">
-      <p style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#DC2626;margin:0 0 12px">Your Enquiry Summary</p>
-      <table style="width:100%;border-collapse:collapse">
-        ${data.investmentType ? row("Investment Type", data.investmentType) : ""}
-        ${data.budget ? row("Budget", data.budget) : ""}
-        ${data.state ? row("State", data.state) : ""}
-      </table>
-    </div>` : ""}
-    <div style="text-align:center;margin-bottom:24px">
-      <p style="font-size:14px;color:#555555;margin:0 0 14px">In the meantime, explore our investment options:</p>
-      <a href="https://buybuilderdirect.com.au/investments" style="display:inline-block;background:#DC2626;color:#ffffff;text-decoration:none;padding:12px 28px;border-radius:6px;font-weight:700;font-size:14px">
-        View Investment Options &rarr;
-      </a>
-    </div>
-    <hr style="border:none;border-top:1px solid #e5e5e5;margin:24px 0">
-    <p style="font-size:13px;color:#888888;margin:0 0 6px;text-align:center">Prefer to talk now?</p>
-    <p style="font-size:15px;font-weight:700;text-align:center;margin:0">
-      <a href="tel:+61489995725" style="color:#DC2626;text-decoration:none">+61 489 995 725</a>
-    </p>
-  </div>
-  <div style="text-align:center;padding:16px 0 0">
-    <p style="font-size:11px;color:#aaaaaa;margin:0">
-      &copy; ${new Date().getFullYear()} Buy Builder Direct &middot; buybuilderdirect.com.au<br>
-      This is an automated confirmation. Please do not reply to this email.
-    </p>
-  </div>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enquiry received — Buy Builder Direct</title>
+</head>
+<body style="margin:0;padding:0;background:#f0f0f0;font-family:Arial,Helvetica,sans-serif">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f0f0f0;padding:32px 12px">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:10px;overflow:hidden;border:1px solid #e5e5e5">
+          <!-- Header -->
+          <tr>
+            <td style="background:#0A0A0A;padding:28px 28px 24px;text-align:center">
+              <p style="margin:0 0 10px;color:#DC2626;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase">Buy Builder Direct</p>
+              <h1 style="margin:0;color:#ffffff;font-size:24px;line-height:1.3;font-weight:700">Thanks for reaching out, ${firstName}!</h1>
+              <p style="margin:10px 0 0;color:#A3A3A3;font-size:14px">We&rsquo;ve got your enquiry</p>
+            </td>
+          </tr>
+          <!-- Red accent line -->
+          <tr>
+            <td style="height:4px;background:#DC2626;font-size:0;line-height:0">&nbsp;</td>
+          </tr>
+          <!-- Body -->
+          <tr>
+            <td style="padding:28px 28px 8px">
+              <p style="margin:0 0 18px;font-size:15px;line-height:1.65;color:#333333">
+                One of our team will be in touch shortly &mdash; usually within <strong>1 business day</strong>.
+                We&rsquo;ll help you explore builder-direct options and how much <strong>\$\$\$</strong> you could keep in your deal.
+              </p>
+              ${
+                summaryRows
+                  ? `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#fafafa;border:1px solid #eeeeee;border-radius:8px;margin:0 0 22px">
+                <tr>
+                  <td style="padding:18px 20px">
+                    <p style="margin:0 0 12px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#DC2626">Your enquiry summary</p>
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${summaryRows}</table>
+                  </td>
+                </tr>
+              </table>`
+                  : ""
+              }
+              <p style="margin:0 0 16px;font-size:14px;color:#555555;text-align:center">While you wait, explore our investment pathways:</p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="center" style="padding-bottom:24px">
+                    <a href="https://buybuilderdirect.com.au/investments" style="display:inline-block;background:#DC2626;color:#ffffff;text-decoration:none;padding:14px 28px;border-radius:6px;font-weight:700;font-size:14px">
+                      View Investment Options &rarr;
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              <hr style="border:none;border-top:1px solid #eeeeee;margin:0 0 20px" />
+              <p style="margin:0 0 6px;font-size:13px;color:#888888;text-align:center">Prefer to talk now?</p>
+              <p style="margin:0 0 8px;font-size:16px;font-weight:700;text-align:center">
+                <a href="tel:+61489995725" style="color:#DC2626;text-decoration:none">+61 489 995 725</a>
+              </p>
+              <p style="margin:0;font-size:13px;text-align:center">
+                <a href="mailto:info@buybuilderdirect.com.au" style="color:#555555;text-decoration:none">info@buybuilderdirect.com.au</a>
+              </p>
+            </td>
+          </tr>
+          <!-- Footer -->
+          <tr>
+            <td style="padding:20px 28px 28px;text-align:center">
+              <p style="margin:0;font-size:11px;line-height:1.6;color:#aaaaaa">
+                &copy; ${year} Buy Builder Direct &middot; <a href="https://buybuilderdirect.com.au" style="color:#888888;text-decoration:none">buybuilderdirect.com.au</a><br />
+                This is an automated confirmation. Please do not reply to this email.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
 </body>
 </html>`;
 }
 
 function buildEmailHtml(data: z.infer<typeof ContactSchema>): string {
-  const row = (label: string, value: string) =>
+  const name = escapeHtml(`${data.firstName} ${data.lastName}`.trim());
+  const email = escapeHtml(data.email);
+  const phone = escapeHtml(data.phone);
+  const budget = escapeHtml(data.budget ?? "");
+  const investmentType = escapeHtml(data.investmentType ?? "");
+  const state = escapeHtml(data.state ?? "");
+  const message = escapeHtml(data.message ?? "").replace(/\n/g, "<br>");
+  const submittedAt = new Date().toLocaleString("en-AU", {
+    timeZone: "Australia/Melbourne",
+  });
+
+  const row = (label: string, value: string, isHtml = false) =>
     value
       ? `<tr>
-          <td style="padding:10px 14px;font-weight:600;background:#f5f5f5;width:140px;font-size:13px">${label}</td>
-          <td style="padding:10px 14px;font-size:13px">${value}</td>
+          <td style="padding:12px 16px;font-weight:700;background:#f7f7f7;width:150px;font-size:13px;color:#333;border-bottom:1px solid #eeeeee;font-family:Arial,sans-serif">${label}</td>
+          <td style="padding:12px 16px;font-size:13px;color:#1a1a1a;border-bottom:1px solid #eeeeee;font-family:Arial,sans-serif">${
+            isHtml ? value : value
+          }</td>
         </tr>`
       : "";
 
   return `<!DOCTYPE html>
-<html>
-<body style="font-family:Arial,sans-serif;color:#1a1a1a;max-width:600px;margin:0 auto">
-  <div style="background:#0A0A0A;padding:20px 24px;border-radius:8px 8px 0 0">
-    <p style="color:#DC2626;font-size:13px;font-weight:700;letter-spacing:2px;margin:0;text-transform:uppercase">Buy Builder Direct</p>
-    <h1 style="color:#ffffff;margin:6px 0 0;font-size:20px">
-      New ${data.formType === "lead" ? "Lead" : "Contact"} Form Submission
-    </h1>
-  </div>
-  <div style="border:1px solid #e5e5e5;border-top:none;border-radius:0 0 8px 8px;overflow:hidden">
-    <table style="width:100%;border-collapse:collapse">
-      ${row("Name", `${data.firstName} ${data.lastName}`.trim())}
-      ${row("Email", `<a href="mailto:${data.email}" style="color:#DC2626">${data.email}</a>`)}
-      ${row("Phone", data.phone)}
-      ${data.budget ? row("Budget", data.budget) : ""}
-      ${data.investmentType ? row("Investment Type", data.investmentType) : ""}
-      ${data.state ? row("State", data.state) : ""}
-      ${data.message ? row("Message", data.message.replace(/\n/g, "<br>")) : ""}
-    </table>
-    <div style="padding:14px;background:#fafafa;border-top:1px solid #e5e5e5">
-      <p style="margin:0;font-size:11px;color:#888">
-        Submitted at ${new Date().toLocaleString("en-AU", { timeZone: "Australia/Melbourne" })} AEST
-        · buybuilderdirect.com.au
-      </p>
-    </div>
-  </div>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New enquiry — Buy Builder Direct</title>
+</head>
+<body style="margin:0;padding:0;background:#f0f0f0;font-family:Arial,Helvetica,sans-serif">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f0f0f0;padding:32px 12px">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:10px;overflow:hidden;border:1px solid #e5e5e5">
+          <tr>
+            <td style="background:#0A0A0A;padding:24px 28px">
+              <p style="margin:0 0 6px;color:#DC2626;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase">Buy Builder Direct</p>
+              <h1 style="margin:0;color:#ffffff;font-size:20px;font-weight:700">
+                New ${data.formType === "lead" ? "Lead" : "Contact"} Form Submission
+              </h1>
+            </td>
+          </tr>
+          <tr>
+            <td style="height:4px;background:#DC2626;font-size:0;line-height:0">&nbsp;</td>
+          </tr>
+          <tr>
+            <td style="padding:0">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                ${row("Name", name)}
+                ${row("Email", `<a href="mailto:${email}" style="color:#DC2626;text-decoration:none">${email}</a>`, true)}
+                ${row("Phone", `<a href="tel:${phone.replace(/\s/g, "")}" style="color:#1a1a1a;text-decoration:none">${phone}</a>`, true)}
+                ${budget ? row("Budget", budget) : ""}
+                ${investmentType ? row("Investment Type", investmentType) : ""}
+                ${state ? row("State", state) : ""}
+                ${message ? row("Message", message, true) : ""}
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:16px 20px;background:#fafafa;border-top:1px solid #eeeeee">
+              <p style="margin:0;font-size:11px;color:#888888;font-family:Arial,sans-serif">
+                Submitted ${submittedAt} AEST &middot; buybuilderdirect.com.au
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
 </body>
 </html>`;
 }
@@ -222,7 +323,7 @@ export async function POST(req: NextRequest) {
   try {
     // Send both emails in parallel
     const [notifyRes, confirmRes] = await Promise.all([
-      // Notification to Patrik
+      // Notification to team inbox
       fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: resendHeaders,
@@ -230,7 +331,7 @@ export async function POST(req: NextRequest) {
           from: `Buy Builder Direct <${fromEmail}>`,
           to: [toEmail],
           reply_to: data.email,
-          subject: `New ${data.formType === "lead" ? "Lead" : "Enquiry"} \u2014 ${firstName} ${lastName}`,
+          subject: `New ${data.formType === "lead" ? "Lead" : "Enquiry"} \u2014 ${firstName} ${lastName}`.trim(),
           html: buildEmailHtml(cleanData),
         }),
       }),
@@ -247,9 +348,15 @@ export async function POST(req: NextRequest) {
       }),
     ]);
 
-    if (!notifyRes.ok) throw new Error(`Resend notify error: ${notifyRes.status}`);
-    // Log confirmation failure but don't block success response
-    if (!confirmRes.ok) console.error(`Resend confirmation error: ${confirmRes.status}`);
+    if (!notifyRes.ok) {
+      const errBody = await notifyRes.text();
+      console.error("Resend notify error:", notifyRes.status, errBody);
+      throw new Error(`Resend notify error: ${notifyRes.status}`);
+    }
+    if (!confirmRes.ok) {
+      const errBody = await confirmRes.text();
+      console.error("Resend confirmation error:", confirmRes.status, errBody);
+    }
 
     return NextResponse.json({ success: true });
   } catch (err) {

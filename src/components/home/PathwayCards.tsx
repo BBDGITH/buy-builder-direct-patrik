@@ -51,7 +51,7 @@ const pathways = [
     description: "Unlock the value of your existing block. We replace aging properties with high-performing investments.",
     image: "/images/projects/rowville/rowville-1.jpg",
     link: "/investments/knock-down-rebuild",
-    yield: "Up to 15% saving",
+    yield: "Save $$$",
   },
   {
     id: "rooming-houses",

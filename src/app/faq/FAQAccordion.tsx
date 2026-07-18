@@ -19,7 +19,7 @@ const faqGroups: FAQGroup[] = [
  {
  question: "What is Buy Builder Direct?",
  answer:
- "Buy Builder Direct is an Australian platform that connects property investors directly with licensed, vetted builders — cutting out the project marketing layer and the associated fees. We facilitate over 180 investment property builds across all seven states, helping investors save an average of 10–15% compared to buying through a buyer's agent or developer.",
+ "Buy Builder Direct is an Australian platform that connects property investors directly with licensed, vetted builders — cutting out the project marketing layer and the associated fees. We facilitate over 180 investment property builds across all seven states, helping investors keep more  compared to buying through a buyer's agent or developer.",
  },
  {
  question: "How long have you been operating?",

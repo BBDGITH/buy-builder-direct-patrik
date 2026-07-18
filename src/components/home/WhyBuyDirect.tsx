@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 const benefits = [
  {
- title: "Save Up To 15%",
+ title: "Save $$$",
  description:
  "Eliminate agent commissions and marketing levies. Buy at the builder's price — not the marked-up retail price investors typically pay.",
  },

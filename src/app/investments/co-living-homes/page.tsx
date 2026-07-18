@@ -28,7 +28,7 @@ const benefits = [
  },
  {
  title: "No Agent Fee",
- desc: "Buy at builder-direct pricing and pocket the 10–15% that would have gone to a sales agent.",
+ desc: "Buy at builder-direct pricing and pocket the $$$ that would have gone to a sales agent.",
  },
  {
  title: "Rent-Ready Design",
@@ -192,7 +192,7 @@ export default function CoLivingHomesPage() {
  <p>
  The BBD advantage is simple: we connect you directly with builders who specialise in
  co-living floor plans and construction. There is no project marketer, no selling
- agent, no intermediary adding 10–15% to your purchase price. Sarah M., one of our
+ agent, no intermediary adding markups to your purchase price. Sarah M., one of our
  Melbourne investors, saved over $30,000 on her Footscray co-living build — and used
  that saving to furnish every room professionally, lifting her yield further still.
  </p>
@@ -221,7 +221,7 @@ export default function CoLivingHomesPage() {
  },
  {
  num: "02",
- title: "10–15% Builder-Direct Savings",
+ title: "Builder-Direct $$$ Savings",
  body: "By cutting out the agent and project marketer, you access the builder's base price. On a $600k co-living build, that's up to $90k saved before your first tenant moves in.",
  },
  {

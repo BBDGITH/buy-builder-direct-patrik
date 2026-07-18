@@ -1,7 +1,7 @@
 const items = [
  {
- value: "15%",
- label: "Average Savings",
+ value: "$$$",
+ label: "Kept In Your Deal",
  },
  {
  value: "Nationwide",

@@ -42,6 +42,14 @@ export default async function ProjectGalleryPage(props: { params: Promise<{ proj
   const files = fs.readdirSync(projDir);
   const images = files
     .filter((file) => file.match(/\.(jpg|jpeg|png|webp)$/i))
+    // Exclude Civic Homes / branding logo slides
+    .filter((file) => {
+      try {
+        return fs.statSync(path.join(projDir, file)).size > 40_000;
+      } catch {
+        return true;
+      }
+    })
     .sort()
     .map((file) => `/images/projects/${projectSlug}/${file}`);
 

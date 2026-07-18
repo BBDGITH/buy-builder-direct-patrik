@@ -258,11 +258,11 @@ export default function TermsPage() {
  <p className="text-base" style={{ color: "#A3A3A3" }}>
  Email:{" "}
  <a
- href="mailto:hello@buybuilderdirect.com.au"
+ href="mailto:info@buybuilderdirect.com.au"
  className="underline underline-offset-2"
  style={{ color: "#DC2626" }}
  >
- hello@buybuilderdirect.com.au
+ info@buybuilderdirect.com.au
  </a>
  </p>
  <p

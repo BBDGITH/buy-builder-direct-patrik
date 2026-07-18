@@ -79,7 +79,7 @@ export default function Footer() {
       </Link>
       <p className="text-sm text-[#A3A3A3] leading-relaxed mb-6 max-w-xs">
        Australia&rsquo;s direct-to-builder investment platform. Skip the agents,
-       save up to 15%, and build real wealth.
+       keep more $$$ in your deal, and build real wealth.
       </p>
 
       {/* Social icons */}

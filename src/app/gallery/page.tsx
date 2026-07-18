@@ -28,6 +28,15 @@ export default function GalleryPage() {
           const files = fs.readdirSync(dirPath);
           const images = files
             .filter((file) => file.match(/\.(jpg|jpeg|png|webp)$/i))
+            // Exclude Civic Homes / branding logo slides (tiny watermark files)
+            .filter((file) => {
+              const full = path.join(dirPath, file);
+              try {
+                return fs.statSync(full).size > 40_000;
+              } catch {
+                return true;
+              }
+            })
             .sort(); // Sorting to ensure we pick the first one consistently
             
           if (images.length > 0) {

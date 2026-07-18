@@ -32,11 +32,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
  metadataBase: new URL(BASE_URL),
  title: {
-  default: "Buy Builder Direct | Deal Direct with Builders — Save Up To 15%",
+  default: "Buy Builder Direct | Deal Direct with Builders — Save $$$",
   template: "%s | Buy Builder Direct",
  },
  description:
-  "Save up to 15% on your investment property by buying direct from Australian builders. Co-Living, Rooming Houses, SDA/NDIS, House & Land, Custom Builds, Knock Down and Rebuild. No agents. No markups.",
+  "Save $$$ on your investment property by buying direct from Australian builders. Co-Living, Rooming Houses, SDA/NDIS, House & Land, Custom Builds, Knock Down and Rebuild. No agents. No markups.",
  keywords: [
   "buy builder direct",
   "investment property Australia",
@@ -70,9 +70,9 @@ export const metadata: Metadata = {
   locale: "en_AU",
   url: BASE_URL,
   siteName: "Buy Builder Direct",
-  title: "Buy Builder Direct | Deal Direct with Builders — Save Up To 15%",
+  title: "Buy Builder Direct | Deal Direct with Builders — Save $$$",
   description:
-   "Save up to 15% on your investment property by buying direct from Australian builders. No agents. No markups.",
+   "Save $$$ on your investment property by buying direct from Australian builders. No agents. No markups.",
   images: [
    {
     url: "/images/projects/mambourin/mambourin-1.jpg",
@@ -84,9 +84,9 @@ export const metadata: Metadata = {
  },
  twitter: {
   card: "summary_large_image",
-  title: "Buy Builder Direct | Deal Direct — Save Up To 15%",
+  title: "Buy Builder Direct | Deal Direct — Save $$$",
   description:
-   "Save up to 15% on your investment property. Direct to builder. No agents. No markups.",
+   "Save $$$ on your investment property. Direct to builder. No agents. No markups.",
   images: ["/images/projects/mambourin/mambourin-1.jpg"],
   creator: "@buybuilderdirect",
  },

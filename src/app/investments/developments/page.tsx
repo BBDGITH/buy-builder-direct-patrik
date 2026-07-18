@@ -28,7 +28,7 @@ const benefits = [
  },
  {
  title: "Builder-Direct Savings",
- desc: "Multi-unit builds through BBD cut out the developer middleman entirely — saving 10–15% on construction costs.",
+ desc: "Multi-unit builds through BBD cut out the developer middleman entirely — keeping more $$$ on construction costs.",
  },
  {
  title: "End-to-End Management",

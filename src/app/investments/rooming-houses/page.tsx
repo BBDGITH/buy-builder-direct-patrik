@@ -32,7 +32,7 @@ const benefits = [
  },
  {
  title: "No Agent Markup",
- desc: "Builder-direct pricing removes the 10–15% agent margin, keeping more capital in your portfolio.",
+ desc: "Builder-direct pricing cuts agent margins, keeping more $$$ in your portfolio.",
  },
 ];
 
@@ -219,7 +219,7 @@ export default function RoomingHousesPage() {
  },
  {
  num: "02",
- title: "10–15% Builder-Direct Savings",
+ title: "Builder-Direct $$$ Savings",
  body: "James saved $20,000+ per property going direct. On three rooming houses that's $60,000+ in extra capital — enough to furnish and equip every room professionally.",
  },
  {

@@ -88,7 +88,7 @@ const sections = [
  "Lodge a complaint with the Office of the Australian Information Commissioner (OAIC) if you believe we have mishandled your information",
  ],
  footer:
- "To exercise any of these rights, contact us at hello@buybuilderdirect.com.au. We will respond within 30 days.",
+ "To exercise any of these rights, contact us at info@buybuilderdirect.com.au. We will respond within 30 days.",
  },
  {
  id: "security",
@@ -172,7 +172,7 @@ export default function PrivacyPolicyPage() {
  }}
  >
  <p className="text-base leading-relaxed" style={{ color: "#A3A3A3" }}>
- This policy applies to Buy Builder Direct ABN [ABN]. It is written
+ This policy applies to Buy Builder Direct. It is written
  in plain English to help you understand your rights and how we
  handle your data. If anything is unclear, please reach out to us
  directly.
@@ -256,11 +256,11 @@ export default function PrivacyPolicyPage() {
  <p className="text-base" style={{ color: "#A3A3A3" }}>
  Email:{" "}
  <a
- href="mailto:hello@buybuilderdirect.com.au"
+ href="mailto:info@buybuilderdirect.com.au"
  className="underline underline-offset-2"
  style={{ color: "#DC2626" }}
  >
- hello@buybuilderdirect.com.au
+ info@buybuilderdirect.com.au
  </a>
  </p>
  <p

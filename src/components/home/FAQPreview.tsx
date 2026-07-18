@@ -13,7 +13,7 @@ const faqs = [
  {
  question: "How much can I really save?",
  answer:
- "Most of our investors save between 10% and 15% on the purchase price compared to buying through a traditional agent or project marketer. On a $700,000 property, that's up to $105,000 in savings that stay in your portfolio.",
+ "Most of our investors keep substantial $$$ in their deal by cutting agent and project-marketing markups. On a mid-range purchase, that can mean tens of thousands — capital that stays in your portfolio instead of fees.",
  },
  {
  question: "Do you charge fees?",
