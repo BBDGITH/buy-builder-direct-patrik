@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display, DM_Sans } from "next/font/google";
 import "./globals.css";
-import { Header, Footer, StickyMobileCTA } from "@/components/layout";
+import { Header, Footer, StickyMobileCTA, WhatsAppWidget } from "@/components/layout";
 import { LatestBlogs } from "@/components/home";
 
 const playfair = Playfair_Display({
@@ -123,6 +123,7 @@ export default function RootLayout({
     <main className="flex-1 overflow-x-clip w-full">{children}</main>
     <LatestBlogs />
     <Footer />
+    <WhatsAppWidget />
     <StickyMobileCTA />
    </body>
   </html>

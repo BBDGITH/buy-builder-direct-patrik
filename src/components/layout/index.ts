@@ -1,3 +1,4 @@
 export { default as Header } from "./Header";
 export { default as Footer } from "./Footer";
 export { default as StickyMobileCTA } from "./StickyMobileCTA";
+export { default as WhatsAppWidget } from "./WhatsAppWidget";
