@@ -52,8 +52,8 @@ export default function HeroSection() {
         />
       </div>
 
-      <div className="container-site relative z-10 pt-28 pb-20 md:pt-32 md:pb-24">
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left max-w-3xl min-h-[68vh] lg:min-h-[75vh] justify-center">
+      <div className="container-site relative z-10 pt-28 pb-20 md:pt-32 md:pb-24 overflow-x-clip">
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left max-w-3xl w-full min-h-[68vh] lg:min-h-[75vh] justify-center">
           <motion.p
             custom={0}
             initial="hidden"
@@ -86,11 +86,11 @@ export default function HeroSection() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="mt-5 text-sm font-medium tracking-wide uppercase sm:text-base"
-            style={{ color: "#A3A3A3", letterSpacing: "0.08em" }}
+            className="mt-5 w-full max-w-full text-[11px] leading-relaxed font-medium tracking-wide uppercase sm:text-sm px-1"
+            style={{ color: "#A3A3A3", letterSpacing: "0.06em", wordBreak: "break-word" }}
           >
             Co-Living · Rooming Houses · SDA · House &amp; Land · Custom Builds ·
-            Knock Down &amp; Rebuild
+            Knock Down &amp; Rebuild · Dual Key Homes · Multi Gen Housing
           </motion.p>
 
           <motion.p
@@ -110,12 +110,12 @@ export default function HeroSection() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="mt-8 flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
+            className="mt-8 flex flex-col sm:flex-row gap-4 w-full max-w-full sm:w-auto"
           >
-            <Link href="/contact" className="btn-primary text-base px-8 py-4">
+            <Link href="/contact" className="btn-primary text-base px-6 py-4 w-full sm:w-auto">
               Get Your Free Savings Assessment
             </Link>
-            <Link href="/investments" className="btn-secondary text-base px-8 py-4">
+            <Link href="/investments" className="btn-secondary text-base px-6 py-4 w-full sm:w-auto">
               Explore Investments
             </Link>
           </motion.div>
@@ -125,7 +125,7 @@ export default function HeroSection() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="mt-10 flex flex-wrap justify-center lg:justify-start gap-x-8 gap-y-3"
+            className="mt-10 flex flex-wrap justify-center lg:justify-start gap-x-4 sm:gap-x-8 gap-y-3 w-full max-w-full"
           >
             {trustBadges.map((badge) => (
               <div key={badge.label} className="flex items-center gap-2">

@@ -16,8 +16,8 @@ interface ProjectCategory {
 }
 
 export default function GalleryPage() {
-  let categories: ProjectCategory[] = [];
-  
+  const categories: ProjectCategory[] = [];
+
   try {
     const projectsDir = path.join(process.cwd(), "public", "images", "projects");
     if (fs.existsSync(projectsDir)) {

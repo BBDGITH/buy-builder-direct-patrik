@@ -4,7 +4,6 @@ import {
   PathwayCards,
   ProblemSolution,
   WhyBuyDirect,
-  SavingsCalculator,
   ProcessStepper,
   CaseStudies,
   PropertyShowcase,
@@ -22,7 +21,6 @@ export default function Home() {
       <PathwayCards />
       <ProblemSolution />
       <WhyBuyDirect />
-      <SavingsCalculator />
       <ProcessStepper />
       <CaseStudies />
       <PropertyShowcase />

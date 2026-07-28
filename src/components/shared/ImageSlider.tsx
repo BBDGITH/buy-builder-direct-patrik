@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -10,6 +10,8 @@ interface ImageSliderProps {
 
 export default function ImageSlider({ images }: ImageSliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [focused, setFocused] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
 
   const handlePrevious = useCallback(() => {
     setCurrentIndex((prevIndex) =>
@@ -23,27 +25,46 @@ export default function ImageSlider({ images }: ImageSliderProps) {
     );
   }, [images.length]);
 
-  // Handle keyboard navigation
   useEffect(() => {
+    if (!focused) return;
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowLeft") {
+        e.preventDefault();
         handlePrevious();
       } else if (e.key === "ArrowRight") {
+        e.preventDefault();
         handleNext();
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleNext, handlePrevious]);
+  }, [focused, handleNext, handlePrevious]);
 
   if (!images || images.length === 0) {
     return <div>No images available.</div>;
   }
 
   return (
-    <div className="relative w-full max-w-6xl mx-auto flex flex-col items-center">
-      {/* Main Slider Container */}
+    <div
+      ref={rootRef}
+      className="relative w-full max-w-6xl mx-auto flex flex-col items-center outline-none"
+      tabIndex={0}
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Project photo gallery"
+      onFocus={() => setFocused(true)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+          setFocused(false);
+        }
+      }}
+      onMouseEnter={() => setFocused(true)}
+      onMouseLeave={() => {
+        if (document.activeElement !== rootRef.current) setFocused(false);
+      }}
+    >
       <div className="relative w-full h-[50vh] md:h-[70vh] rounded-xl overflow-hidden shadow-2xl flex items-center justify-center bg-[#111111] border border-[rgba(255,255,255,0.1)]">
         <AnimatePresence mode="wait">
           <motion.div
@@ -56,16 +77,15 @@ export default function ImageSlider({ images }: ImageSliderProps) {
           >
             <Image
               src={images[currentIndex]}
-              alt={`Slide ${currentIndex + 1}`}
+              alt={`Slide ${currentIndex + 1} of ${images.length}`}
               fill
               className="object-contain"
-              sizes="100vw"
-              priority
+              sizes="(max-width: 1152px) 100vw, 1152px"
+              priority={currentIndex === 0}
             />
           </motion.div>
         </AnimatePresence>
 
-        {/* Left Arrow */}
         <button
           onClick={handlePrevious}
           className="absolute left-4 z-10 flex items-center justify-center w-12 h-12 bg-black/50 hover:bg-black/80 text-white rounded-md backdrop-blur-sm transition-all focus:outline-none"
@@ -76,7 +96,6 @@ export default function ImageSlider({ images }: ImageSliderProps) {
           </svg>
         </button>
 
-        {/* Right Arrow */}
         <button
           onClick={handleNext}
           className="absolute right-4 z-10 flex items-center justify-center w-12 h-12 bg-black/50 hover:bg-black/80 text-white rounded-md backdrop-blur-sm transition-all focus:outline-none"
@@ -88,7 +107,6 @@ export default function ImageSlider({ images }: ImageSliderProps) {
         </button>
       </div>
 
-      {/* Dots Indicator */}
       <div className="mt-8 flex flex-wrap justify-center gap-2 px-4">
         {images.map((_, index) => (
           <button
@@ -98,6 +116,7 @@ export default function ImageSlider({ images }: ImageSliderProps) {
               index === currentIndex ? "bg-[#DC2626] w-6" : "bg-gray-600 hover:bg-gray-400"
             }`}
             aria-label={`Go to slide ${index + 1}`}
+            aria-current={index === currentIndex ? "true" : undefined}
           />
         ))}
       </div>

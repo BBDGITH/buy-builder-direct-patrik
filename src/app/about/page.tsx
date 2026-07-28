@@ -4,7 +4,6 @@ import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
-import type { Metadata } from "next";
 
 /* ── metadata can't be exported from a client component – use generateMetadata pattern ─ */
 // (moved to a wrapper – see bottom of file)

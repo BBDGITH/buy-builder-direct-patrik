@@ -3,55 +3,63 @@ import type { NextConfig } from "next";
 const BASE_URL =
  process.env.NEXT_PUBLIC_SITE_URL ?? "https://buybuilderdirect.com.au";
 
-// ── Security headers applied to all routes ────────────────────────────────────
-const securityHeaders = [
- // Prevent MIME-type sniffing
- { key: "X-Content-Type-Options", value: "nosniff" },
- // Block clickjacking
- { key: "X-Frame-Options", value: "SAMEORIGIN" },
- // Legacy XSS filter (belt-and-suspenders)
- { key: "X-XSS-Protection", value: "1; mode=block" },
- // DNS prefetch control
- { key: "X-DNS-Prefetch-Control", value: "on" },
- // Referrer policy
- { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
- // Permissions policy (deny unneeded browser features)
- {
-  key: "Permissions-Policy",
-  value: "camera=(), microphone=(), geolocation=(), payment=()",
- },
- // HSTS — only enable once you're live on HTTPS
- {
-  key: "Strict-Transport-Security",
-  value: "max-age=63072000; includeSubDomains; preload",
- },
- // Content Security Policy
- // Allows: self, Google Fonts, Framer Motion inline styles, Vercel Analytics
- {
-  key: "Content-Security-Policy",
-  value: [
-   "default-src 'self'",
-   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://*.vercel-scripts.com",
-   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-   "font-src 'self' https://fonts.gstatic.com data:",
-   "img-src 'self' data: blob: https:",
-   "connect-src 'self' https://api.resend.com https://vitals.vercel-insights.com",
-   "frame-ancestors 'self'",
-   "base-uri 'self'",
-   "form-action 'self'",
-  ]
-   .join("; ")
-   .trim(),
- },
-];
+const isDev = process.env.NODE_ENV === "development";
+
+function buildSecurityHeaders() {
+ const scriptSrc = [
+  "'self'",
+  "'unsafe-inline'",
+  ...(isDev ? ["'unsafe-eval'"] : []),
+  "https://vercel.live",
+  "https://*.vercel-scripts.com",
+ ].join(" ");
+
+ const csp = [
+  "default-src 'self'",
+  `script-src ${scriptSrc}`,
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src 'self' https://fonts.gstatic.com data:",
+  "img-src 'self' data: blob: https:",
+  "connect-src 'self' https://api.resend.com https://vitals.vercel-insights.com https://my.matterport.com",
+  "frame-src 'self' https://my.matterport.com",
+  "frame-ancestors 'self'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "object-src 'none'",
+  ...(isDev ? [] : ["upgrade-insecure-requests"]),
+ ].join("; ");
+
+ return [
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "X-Frame-Options", value: "SAMEORIGIN" },
+  { key: "X-XSS-Protection", value: "1; mode=block" },
+  { key: "X-DNS-Prefetch-Control", value: "on" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  {
+   key: "Permissions-Policy",
+   value: "camera=(), microphone=(), geolocation=(), payment=()",
+  },
+  // HSTS only in production (breaks plain HTTP localhost in dev)
+  ...(isDev
+   ? []
+   : [
+      {
+       key: "Strict-Transport-Security",
+       value: "max-age=63072000; includeSubDomains; preload",
+      },
+     ]),
+  { key: "Content-Security-Policy", value: csp },
+ ];
+}
 
 const nextConfig: NextConfig = {
- // ── Security headers ────────────────────────────────────────────────────────
+ output: "standalone",
+
  async headers() {
   return [
    {
     source: "/(.*)",
-    headers: securityHeaders,
+    headers: buildSecurityHeaders(),
    },
   ];
  },

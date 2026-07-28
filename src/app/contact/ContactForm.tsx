@@ -22,6 +22,13 @@ const investmentTypes = [
  { value: "Not Sure – Help Me Decide", label: "Not Sure – Help Me Decide" },
 ];
 
+const fundingOptions = [
+ { value: "", label: "Select an option" },
+ { value: "Yes", label: "Yes" },
+ { value: "No", label: "No" },
+ { value: "Not sure yet", label: "Not sure yet" },
+];
+
 const states = [
  { value: "", label: "Select your state" },
  { value: "VIC", label: "Victoria (VIC)" },
@@ -42,6 +49,7 @@ type FormData = {
  budget: string;
  investmentType: string;
  state: string;
+ fundingAssistance: string;
  message: string;
 };
 
@@ -53,6 +61,7 @@ const initialForm: FormData = {
  budget: "",
  investmentType: "",
  state: "",
+ fundingAssistance: "",
  message: "",
 };
 
@@ -106,7 +115,7 @@ export default function ContactForm() {
  const [submitted, setSubmitted] = useState(false);
  const [submitting, setSubmitting] = useState(false);
  const [apiError, setApiError] = useState("");
- const formStartRef = useRef<number>(Date.now());
+ const formStartRef = useRef<number>(0);
  const honeypotRef = useRef<HTMLInputElement>(null);
 
  useEffect(() => {
@@ -140,6 +149,7 @@ export default function ContactForm() {
   if (!form.budget) newErrors.budget = "Please select a budget range" as never;
   if (!form.investmentType) newErrors.investmentType = "Please select an investment type" as never;
   if (!form.state) newErrors.state = "Please select your state" as never;
+  if (!form.fundingAssistance) newErrors.fundingAssistance = "Please select an option" as never;
   setErrors(newErrors);
   return Object.keys(newErrors).length === 0;
  };
@@ -314,6 +324,19 @@ export default function ContactForm() {
       style={{ ...inputStyle, cursor: "pointer", ...(errors.state ? { borderColor: "#EF4444" } : {}) }}
      >
       {states.map((o) => (
+       <option key={o.value} value={o.value} disabled={o.value === ""}>{o.label}</option>
+      ))}
+     </select>
+    </Field>
+
+    <Field id="fundingAssistance" label="Do you need assistance with funding?" required error={errors.fundingAssistance}>
+     <select
+      id="fundingAssistance" name="fundingAssistance" required
+      value={form.fundingAssistance} onChange={handleChange}
+      className={inputClass}
+      style={{ ...inputStyle, cursor: "pointer", ...(errors.fundingAssistance ? { borderColor: "#EF4444" } : {}) }}
+     >
+      {fundingOptions.map((o) => (
        <option key={o.value} value={o.value} disabled={o.value === ""}>{o.label}</option>
       ))}
      </select>

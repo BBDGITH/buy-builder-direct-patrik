@@ -19,10 +19,9 @@ const navLinks = [
  { label: "Investments", href: "/investments", hasDropdown: true },
  { label: "How It Works", href: "/how-it-works" },
  { label: "Gallery", href: "/gallery" },
+ { label: "Virtual Tours", href: "/virtual-display-homes" },
+ { label: "ROI Calculator", href: "/roi-calculator" },
  { label: "About", href: "/about" },
- { label: "FAQ", href: "/faq" },
- { label: "Blog", href: "/blog" },
- { label: "Contact", href: "/contact" },
 ];
 
 export default function Header() {
@@ -58,7 +57,7 @@ export default function Header() {
  return (
  <>
  <header
- className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+ className={`fixed top-0 left-0 right-0 z-50 w-full max-w-full overflow-x-clip transition-all duration-300 ${
  scrolled
  ? "py-3 bg-black/90 backdrop-blur-md border-b border-[rgba(220,38,38,0.15)]"
  : "py-5 bg-transparent"
@@ -77,7 +76,7 @@ export default function Header() {
  alt="Buy Builder Direct"
  width={422}
  height={264}
- className="h-16 w-auto object-contain"
+ className="h-12 sm:h-16 w-auto object-contain max-w-[min(100%,200px)]"
  priority
  />
  </Link>

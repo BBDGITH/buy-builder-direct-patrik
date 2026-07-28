@@ -12,6 +12,20 @@ export async function generateStaticParams() {
   const dirs = fs.readdirSync(projectsDir, { withFileTypes: true });
   return dirs
     .filter((dir) => dir.isDirectory())
+    .filter((dir) => {
+      const dirPath = path.join(projectsDir, dir.name);
+      try {
+        return fs
+          .readdirSync(dirPath)
+          .some(
+            (file) =>
+              /\.(jpg|jpeg|png|webp)$/i.test(file) &&
+              fs.statSync(path.join(dirPath, file)).size > 40_000
+          );
+      } catch {
+        return false;
+      }
+    })
     .map((dir) => ({
       project: dir.name,
     }));

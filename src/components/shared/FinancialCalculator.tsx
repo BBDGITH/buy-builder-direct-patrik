@@ -1,57 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import Link from "next/link";
+import {
+  DEFAULTS,
+  calculateRoi,
+  formatAud,
+} from "@/lib/roi-calculations";
 
-export default function FinancialCalculator() {
-  const [weeklyRent, setWeeklyRent] = useState(350);
-  const [rooms, setRooms] = useState(8);
-  const [loanAmount, setLoanAmount] = useState(925225);
-  const [interestRate, setInterestRate] = useState(7.0);
-
-  const marginalTaxRate = 0.39;
-  const depreciationDeduction = 28794;
-  const loanTermYears = 30;
-
-  const annualRentPerRoom = weeklyRent * 52;
-  const totalAnnualRent = annualRentPerRoom * rooms;
-
-  const councilRates = 2000;
-  const insurance = 2500;
-  const propertyManagement = totalAnnualRent * 0.08;
-  const maintenance = totalAnnualRent * 0.05;
-  const utilities = totalAnnualRent * 0.05;
-  const totalExpenses =
-    councilRates + insurance + propertyManagement + maintenance + utilities;
-
-  const netRentalIncome = totalAnnualRent - totalExpenses;
-
-  const propertyValue = loanAmount / 0.7;
-  const grossYield = (totalAnnualRent / propertyValue) * 100;
-  const netYield = (netRentalIncome / propertyValue) * 100;
-
-  const monthlyInterestRate = interestRate / 100 / 12;
-  const numberOfPayments = loanTermYears * 12;
-  const monthlyPayment =
-    (loanAmount *
-      (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments))) /
-    (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
-  const annualLoanRepayment = monthlyPayment * 12;
-
-  const netCashflowAfterFinance = netRentalIncome - annualLoanRepayment;
-  const depreciationRefund = depreciationDeduction * marginalTaxRate;
-  const finalTakeaway = netCashflowAfterFinance + depreciationRefund;
-
-  const formatCurrency = (val: number) =>
-    new Intl.NumberFormat("en-AU", {
-      style: "currency",
-      currency: "AUD",
-      maximumFractionDigits: 0,
-    }).format(val);
-
-  const sliderStyle = (pct: number): React.CSSProperties => ({
+function sliderStyle(pct: number): React.CSSProperties {
+  return {
     accentColor: "#DC2626",
     background: `linear-gradient(to right, #DC2626 ${pct}%, #2a2a2a 0%)`,
-  });
+  };
+}
+
+export default function FinancialCalculator({ showCta = true }: { showCta?: boolean }) {
+  const [weeklyRent, setWeeklyRent] = useState<number>(DEFAULTS.weeklyRent);
+  const [rooms, setRooms] = useState<number>(DEFAULTS.rooms);
+  const [housePrice, setHousePrice] = useState<number>(DEFAULTS.housePrice);
+  const [interestRate, setInterestRate] = useState<number>(DEFAULTS.interestRate);
+
+  const r = useMemo(
+    () =>
+      calculateRoi({
+        weeklyRent,
+        rooms,
+        housePrice,
+        lvr: DEFAULTS.lvr,
+        interestRate,
+      }),
+    [weeklyRent, rooms, housePrice, interestRate]
+  );
 
   return (
     <div
@@ -63,7 +43,6 @@ export default function FinancialCalculator() {
         color: "#FFFFFF",
       }}
     >
-      {/* Header */}
       <div
         className="px-6 md:px-8 py-6"
         style={{
@@ -91,16 +70,39 @@ export default function FinancialCalculator() {
           </span>
         </div>
         <p className="text-sm mt-3 max-w-2xl" style={{ color: "#A3A3A3" }}>
-          Model rent, rooms, and finance — built for builder-direct investors. Not a lookalike green spreadsheet widget.
+          Model rent, rooms, house price, and finance — built for builder-direct investors.
         </p>
       </div>
 
-      {/* Sliders */}
       <div className="p-6 md:px-8 md:pt-8 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
         <div>
           <div className="flex justify-between items-center mb-2">
             <label className="text-xs font-bold tracking-widest uppercase" style={{ color: "#888" }}>
-              Weekly Rent
+              House Price
+            </label>
+            <span className="font-bold" style={{ color: "#DC2626" }}>
+              {formatAud(housePrice)}
+            </span>
+          </div>
+          <input
+            type="range"
+            min={600000}
+            max={2500000}
+            step={10000}
+            value={housePrice}
+            onChange={(e) => setHousePrice(Number(e.target.value))}
+            className="w-full h-2 rounded-lg appearance-none cursor-pointer"
+            style={sliderStyle(((housePrice - 600000) / 1900000) * 100)}
+          />
+          <p className="text-[11px] mt-1" style={{ color: "#666" }}>
+            Loan at {(DEFAULTS.lvr * 100).toFixed(0)}% LVR: {formatAud(r.loanAmount)}
+          </p>
+        </div>
+
+        <div>
+          <div className="flex justify-between items-center mb-2">
+            <label className="text-xs font-bold tracking-widest uppercase" style={{ color: "#888" }}>
+              Weekly Rent (per room)
             </label>
             <span className="font-bold" style={{ color: "#DC2626" }}>
               ${weeklyRent}/wk
@@ -142,27 +144,6 @@ export default function FinancialCalculator() {
         <div>
           <div className="flex justify-between items-center mb-2">
             <label className="text-xs font-bold tracking-widest uppercase" style={{ color: "#888" }}>
-              Loan Amount
-            </label>
-            <span className="font-bold" style={{ color: "#DC2626" }}>
-              {formatCurrency(loanAmount)}
-            </span>
-          </div>
-          <input
-            type="range"
-            min={300000}
-            max={2000000}
-            step={10000}
-            value={loanAmount}
-            onChange={(e) => setLoanAmount(Number(e.target.value))}
-            className="w-full h-2 rounded-lg appearance-none cursor-pointer"
-            style={sliderStyle(((loanAmount - 300000) / 1700000) * 100)}
-          />
-        </div>
-
-        <div>
-          <div className="flex justify-between items-center mb-2">
-            <label className="text-xs font-bold tracking-widest uppercase" style={{ color: "#888" }}>
               Interest Rate
             </label>
             <span className="font-bold" style={{ color: "#DC2626" }}>
@@ -183,8 +164,7 @@ export default function FinancialCalculator() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 border-t" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-        {/* Breakdown */}
-        <div className="p-6 md:p-8 flex flex-col gap-7" style={{ borderRight: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="p-6 md:p-8 flex flex-col gap-7 md:border-r" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
           <div>
             <h3 className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "#888" }}>
               Rental Income
@@ -193,7 +173,7 @@ export default function FinancialCalculator() {
               <span style={{ color: "#C4C4C4" }}>
                 {rooms} rooms × ${weeklyRent}/wk
               </span>
-              <span style={{ color: "#FFFFFF" }}>{formatCurrency(totalAnnualRent)}/yr</span>
+              <span style={{ color: "#22C55E" }}>{formatAud(r.totalAnnualRent)}/yr</span>
             </div>
           </div>
 
@@ -203,15 +183,15 @@ export default function FinancialCalculator() {
             </h3>
             <div className="space-y-2.5 text-sm" style={{ color: "#A3A3A3" }}>
               {[
-                ["Council rates", councilRates],
-                ["Insurance", insurance],
-                ["Property management", propertyManagement],
-                ["Maintenance & repairs", maintenance],
-                ["Utilities", utilities],
+                ["Council rates", r.councilRates],
+                ["Insurance (building + landlord)", r.insurance],
+                ["Property management (8%)", r.propertyManagement],
+                ["Maintenance & repairs", r.maintenance],
+                ["Utilities (landlord-paid, 5%)", r.utilities],
               ].map(([label, val]) => (
-                <div key={String(label)} className="flex justify-between">
+                <div key={String(label)} className="flex justify-between gap-4">
                   <span>{label}</span>
-                  <span style={{ color: "#F87171" }}>- {formatCurrency(Number(val))}</span>
+                  <span style={{ color: "#F87171" }}>- {formatAud(Number(val))}</span>
                 </div>
               ))}
               <div
@@ -219,14 +199,14 @@ export default function FinancialCalculator() {
                 style={{ borderTop: "1px solid rgba(255,255,255,0.08)", color: "#FFFFFF" }}
               >
                 <span>Total Expenses</span>
-                <span style={{ color: "#DC2626" }}>- {formatCurrency(totalExpenses)}</span>
+                <span style={{ color: "#DC2626" }}>- {formatAud(r.totalExpenses)}</span>
               </div>
             </div>
           </div>
 
           <div className="flex justify-between items-center text-sm font-semibold">
             <span>Net Rental Income</span>
-            <span style={{ color: "#22C55E" }}>+ {formatCurrency(netRentalIncome)} / yr</span>
+            <span style={{ color: "#22C55E" }}>+ {formatAud(r.netRentalIncome)} / yr</span>
           </div>
 
           <div
@@ -237,14 +217,14 @@ export default function FinancialCalculator() {
               <p className="text-xs font-bold tracking-widest uppercase mb-1" style={{ color: "#888" }}>
                 Gross Yield
               </p>
-              <p className="text-xl font-bold">{grossYield.toFixed(2)}%</p>
+              <p className="text-xl font-bold">{r.grossYield.toFixed(2)}%</p>
             </div>
             <div className="text-right">
               <p className="text-xs font-bold tracking-widest uppercase mb-1" style={{ color: "#888" }}>
                 Net Yield
               </p>
               <p className="text-xl font-bold" style={{ color: "#DC2626" }}>
-                {netYield.toFixed(2)}%
+                {r.netYield.toFixed(2)}%
               </p>
             </div>
           </div>
@@ -257,22 +237,24 @@ export default function FinancialCalculator() {
               Net Cashflow After Finance
             </h3>
             <p className="text-xs mb-3" style={{ color: "#666" }}>
-              Loan {formatCurrency(loanAmount)} · {interestRate.toFixed(2)}% p.a. · {loanTermYears}yr P&amp;I
+              Loan {formatAud(r.loanAmount)} · {interestRate.toFixed(2)}% p.a. · {DEFAULTS.loanTermYears}yr P&amp;I
             </p>
             <p
               className="text-3xl font-black"
-              style={{ color: netCashflowAfterFinance >= 0 ? "#FFFFFF" : "#F87171" }}
+              style={{ color: r.netCashflowAfterFinance >= 0 ? "#FFFFFF" : "#F87171" }}
             >
-              {netCashflowAfterFinance >= 0 ? "+" : ""}
-              {formatCurrency(netCashflowAfterFinance)}
+              {r.netCashflowAfterFinance >= 0 ? "+" : ""}
+              {formatAud(r.netCashflowAfterFinance)}
               <span className="text-sm font-medium ml-2" style={{ color: "#888" }}>
                 / year
               </span>
             </p>
+            <p className="text-xs mt-2" style={{ color: "#22C55E" }}>
+              ≈ {formatAud(r.weeklyCashflowAfterFinance)} / week
+            </p>
           </div>
         </div>
 
-        {/* Final takeaway — red/black panel (not green competitor look) */}
         <div
           className="p-6 md:p-8 flex flex-col justify-between"
           style={{
@@ -292,19 +274,19 @@ export default function FinancialCalculator() {
               </span>
             </div>
             <p className="text-sm mb-6 leading-relaxed" style={{ color: "#C4C4C4" }}>
-              Net cashflow {formatCurrency(netCashflowAfterFinance)} + tax benefits{" "}
-              {formatCurrency(depreciationRefund)} at {marginalTaxRate * 100}% marginal rate
+              Net cashflow {formatAud(r.netCashflowAfterFinance)} + tax benefits{" "}
+              {formatAud(r.depreciationRefund)} at {(DEFAULTS.marginalTaxRate * 100).toFixed(0)}% marginal rate
             </p>
 
             <p
               className="text-4xl md:text-5xl font-black leading-none"
-              style={{ color: finalTakeaway >= 0 ? "#FFFFFF" : "#F87171", fontFamily: "var(--font-display)" }}
+              style={{ color: r.finalTakeaway >= 0 ? "#FFFFFF" : "#F87171", fontFamily: "var(--font-display)" }}
             >
-              {finalTakeaway >= 0 ? "+" : ""}
-              {formatCurrency(finalTakeaway)}
+              {r.finalTakeaway >= 0 ? "+" : ""}
+              {formatAud(r.finalTakeaway)}
             </p>
             <p className="text-sm mt-2" style={{ color: "#888" }}>
-              / year · about {formatCurrency(finalTakeaway / 52)} / week
+              / year · ≈ {formatAud(r.weeklyFinalTakeaway)} / week
             </p>
           </div>
 
@@ -315,11 +297,13 @@ export default function FinancialCalculator() {
             <div className="space-y-3 text-sm" style={{ color: "#C4C4C4" }}>
               <div className="flex justify-between gap-4">
                 <span>Net cashflow after finance</span>
-                <span>{formatCurrency(netCashflowAfterFinance)}</span>
+                <span>{formatAud(r.netCashflowAfterFinance)}</span>
               </div>
               <div className="flex justify-between gap-4">
-                <span>Depreciation refund (est.)</span>
-                <span style={{ color: "#22C55E" }}>+ {formatCurrency(depreciationRefund)}</span>
+                <span>
+                  Depreciation refund ({formatAud(r.depreciationDeduction)} × {(DEFAULTS.marginalTaxRate * 100).toFixed(0)}%)
+                </span>
+                <span style={{ color: "#22C55E" }}>+ {formatAud(r.depreciationRefund)}</span>
               </div>
               <div
                 className="flex justify-between gap-4 pt-3 font-bold text-white"
@@ -327,8 +311,8 @@ export default function FinancialCalculator() {
               >
                 <span>Final takeaway / yr</span>
                 <span>
-                  {finalTakeaway >= 0 ? "+" : ""}
-                  {formatCurrency(finalTakeaway)}
+                  {r.finalTakeaway >= 0 ? "+" : ""}
+                  {formatAud(r.finalTakeaway)}
                 </span>
               </div>
             </div>
@@ -339,6 +323,20 @@ export default function FinancialCalculator() {
           </div>
         </div>
       </div>
+
+      {showCta && (
+        <div
+          className="px-6 md:px-8 py-6 text-center border-t"
+          style={{ borderColor: "rgba(255,255,255,0.06)", background: "rgba(220,38,38,0.06)" }}
+        >
+          <p className="text-sm mb-4" style={{ color: "#A3A3A3" }}>
+            Want a personalised assessment for your scenario?
+          </p>
+          <Link href="/contact" className="btn-primary inline-block">
+            Get Your Free Savings Assessment
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

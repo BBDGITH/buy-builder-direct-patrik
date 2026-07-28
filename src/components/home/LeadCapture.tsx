@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import FinancialCalculator from "../shared/FinancialCalculator";
+
+const fundingOptions = ["Yes", "No", "Not sure yet"];
 
 const investmentTypes = [
  "Co-Living Homes",
@@ -22,6 +24,7 @@ interface FormData {
  phone: string;
  investmentType: string;
  state: string;
+ fundingAssistance: string;
 }
 
 const initialForm: FormData = {
@@ -29,6 +32,7 @@ const initialForm: FormData = {
  phone: "",
  investmentType: "",
  state: "",
+ fundingAssistance: "",
 };
 
 export default function LeadCapture() {
@@ -37,7 +41,7 @@ export default function LeadCapture() {
  const [submitted, setSubmitted] = useState(false);
  const [submitting, setSubmitting] = useState(false);
  const [apiError, setApiError] = useState("");
- const formStartRef = useRef<number>(Date.now());
+ const formStartRef = useRef<number>(0);
  const honeypotRef = useRef<HTMLInputElement>(null);
 
  useEffect(() => {
@@ -64,6 +68,7 @@ export default function LeadCapture() {
   }
   if (!form.investmentType) newErrors.investmentType = "Please select an investment type";
   if (!form.state) newErrors.state = "Please select your state";
+  if (!form.fundingAssistance) newErrors.fundingAssistance = "Please select an option";
   setErrors(newErrors);
   return Object.keys(newErrors).length === 0;
  };
@@ -247,6 +252,25 @@ export default function LeadCapture() {
          {errors.state && <p className="mt-1 text-xs" style={{ color: "#EF4444" }}>{errors.state}</p>}
         </div>
 
+        {/* Funding assistance */}
+        <div>
+         <label htmlFor="lcFunding" className="block text-sm font-medium mb-1.5" style={{ color: "#A3A3A3" }}>
+          Do you need assistance with funding? <span style={{ color: "#DC2626" }}>*</span>
+         </label>
+         <select
+          id="lcFunding" name="fundingAssistance" required
+          value={form.fundingAssistance} onChange={handleChange}
+          className="w-full rounded-lg px-4 py-3 text-sm outline-none transition-colors appearance-none"
+          style={selectStyle(form.fundingAssistance, !!errors.fundingAssistance)}
+         >
+          <option value="" disabled>Select an option</option>
+          {fundingOptions.map((o) => (
+           <option key={o} value={o} style={{ color: "#FFFFFF" }}>{o}</option>
+          ))}
+         </select>
+         {errors.fundingAssistance && <p className="mt-1 text-xs" style={{ color: "#EF4444" }}>{errors.fundingAssistance}</p>}
+        </div>
+
         {apiError && (
          <div
           className="rounded-lg px-4 py-3 text-sm"
@@ -359,26 +383,27 @@ export default function LeadCapture() {
      </motion.div>
     </div>
 
-    {/* Financial Calculator Section */}
+    {/* ROI Calculator CTA */}
     <motion.div
      initial={{ opacity: 0, y: 30 }}
      whileInView={{ opacity: 1, y: 0 }}
      viewport={{ once: true }}
      transition={{ duration: 0.6, delay: 0.2 }}
-     className="mt-20 pt-16 border-t border-[rgba(220,38,38,0.2)]"
+     className="mt-20 pt-16 border-t border-[rgba(220,38,38,0.2)] text-center"
     >
-      <div className="text-center mb-10">
-        <h2
-          className="text-3xl font-bold md:text-4xl"
-          style={{ fontFamily: "var(--font-display)", color: "#FFFFFF" }}
-        >
-          Calculate Your Potential Returns
-        </h2>
-        <p className="text-lg mt-4" style={{ color: "#A3A3A3" }}>
-          See how a direct-to-builder investment can accelerate your cashflow.
-        </p>
-      </div>
-      <FinancialCalculator />
+      <h2
+        className="text-3xl font-bold md:text-4xl"
+        style={{ fontFamily: "var(--font-display)", color: "#FFFFFF" }}
+      >
+        Calculate Your Potential Returns
+      </h2>
+      <p className="text-lg mt-4 max-w-2xl mx-auto" style={{ color: "#A3A3A3" }}>
+        See how a direct-to-builder investment can accelerate your cashflow.
+        Model rent, rooms, house price, and finance with our interactive ROI calculator.
+      </p>
+      <Link href="/roi-calculator" className="btn-primary inline-block mt-8">
+        Open BBD Cashflow Lab
+      </Link>
     </motion.div>
    </div>
   </section>

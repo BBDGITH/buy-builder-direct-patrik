@@ -1,22 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-
-// ── Rate limiting (in-memory; upgrade to Vercel KV for stricter limits) ──────
-const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
-const RATE_LIMIT_MAX = 5;
-const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
-
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now();
-  const entry = rateLimitStore.get(ip);
-  if (!entry || now > entry.resetAt) {
-    rateLimitStore.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
-    return true;
-  }
-  if (entry.count >= RATE_LIMIT_MAX) return false;
-  entry.count++;
-  return true;
-}
+import { checkRateLimit } from "@/lib/rate-limit";
 
 function getIP(req: NextRequest): string {
   return (
@@ -26,31 +10,49 @@ function getIP(req: NextRequest): string {
   );
 }
 
-// ── Validation schema ─────────────────────────────────────────────────────────
-const ContactSchema = z.object({
-  firstName: z.string().min(1, "First name required").max(50).trim(),
-  lastName: z.string().max(50).trim().optional().default(""),
-  email: z
-    .string()
-    .min(1, "Email required")
-    .max(254)
-    .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email address"),
-  phone: z
-    .string()
-    .min(6, "Phone required")
-    .max(20)
-    .regex(/^[\d\s+\-()\/.]+$/, "Invalid phone number"),
-  budget: z.string().max(50).optional().default(""),
-  investmentType: z.string().max(100).optional().default(""),
-  state: z.string().max(50).optional().default(""),
-  message: z.string().max(2000).optional().default(""),
-  // Honeypot – must be empty; bots fill it, humans don't see it
-  _hp: z.string().max(0).optional(),
-  // Timing check – timestamp of when form was first rendered
-  _t: z.number().optional(),
-  formType: z.enum(["contact", "lead"]).default("contact"),
-});
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MIN_FORM_MS = 3000;
+const MAX_FORM_MS = 2 * 60 * 60 * 1000; // 2 hours
 
+// ── Validation schema ─────────────────────────────────────────────────────────
+const ContactSchema = z
+  .object({
+    firstName: z.string().min(1, "First name required").max(50).trim(),
+    lastName: z.string().max(50).trim().optional().default(""),
+    email: z.string().max(254).trim().optional().default(""),
+    phone: z
+      .string()
+      .min(6, "Phone required")
+      .max(20)
+      .regex(/^[\d\s+\-()\/.]+$/, "Invalid phone number"),
+    budget: z.string().max(50).optional().default(""),
+    investmentType: z.string().max(100).optional().default(""),
+    state: z.string().max(50).optional().default(""),
+    fundingAssistance: z.string().max(50).optional().default(""),
+    message: z.string().max(2000).optional().default(""),
+    // Honeypot – must be empty; bots fill it, humans don't see it
+    _hp: z.string().max(0).optional(),
+    // Timing check – timestamp of when form was first rendered (required)
+    _t: z.number({ error: "Invalid submission." }),
+    formType: z.enum(["contact", "lead"]).default("contact"),
+  })
+  .superRefine((data, ctx) => {
+    if (data.formType === "contact") {
+      if (!data.email || !EMAIL_RE.test(data.email)) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["email"],
+          message: data.email ? "Invalid email address" : "Email required",
+        });
+      }
+    } else if (data.email && !EMAIL_RE.test(data.email)) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["email"],
+        message: "Invalid email address",
+      });
+    }
+  });
 function sanitize(str: string): string {
   // Strip HTML tags and limit length to prevent injection
   return str.replace(/<[^>]*>/g, "").replace(/[<>]/g, "").trim();
@@ -182,6 +184,7 @@ function buildEmailHtml(data: z.infer<typeof ContactSchema>): string {
   const budget = escapeHtml(data.budget ?? "");
   const investmentType = escapeHtml(data.investmentType ?? "");
   const state = escapeHtml(data.state ?? "");
+  const fundingAssistance = escapeHtml(data.fundingAssistance ?? "");
   const message = escapeHtml(data.message ?? "").replace(/\n/g, "<br>");
   const submittedAt = new Date().toLocaleString("en-AU", {
     timeZone: "Australia/Melbourne",
@@ -224,11 +227,12 @@ function buildEmailHtml(data: z.infer<typeof ContactSchema>): string {
             <td style="padding:0">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                 ${row("Name", name)}
-                ${row("Email", `<a href="mailto:${email}" style="color:#DC2626;text-decoration:none">${email}</a>`, true)}
+                ${email ? row("Email", `<a href="mailto:${email}" style="color:#DC2626;text-decoration:none">${email}</a>`, true) : ""}
                 ${row("Phone", `<a href="tel:${phone.replace(/\s/g, "")}" style="color:#1a1a1a;text-decoration:none">${phone}</a>`, true)}
                 ${budget ? row("Budget", budget) : ""}
                 ${investmentType ? row("Investment Type", investmentType) : ""}
                 ${state ? row("State", state) : ""}
+                ${fundingAssistance ? row("Funding Assistance", fundingAssistance) : ""}
                 ${message ? row("Message", message, true) : ""}
               </table>
             </td>
@@ -250,9 +254,8 @@ function buildEmailHtml(data: z.infer<typeof ContactSchema>): string {
 
 // ── POST handler ──────────────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
-  // Rate limit
   const ip = getIP(req);
-  if (!checkRateLimit(ip)) {
+  if (!(await checkRateLimit(ip))) {
     return NextResponse.json(
       { error: "Too many requests. Please try again later." },
       { status: 429 }
@@ -266,7 +269,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid request." }, { status: 400 });
   }
 
-  // Validate
   const result = ContactSchema.safeParse(body);
 
   if (!result.success) {
@@ -287,56 +289,71 @@ export async function POST(req: NextRequest) {
 
   // Honeypot check (extra safety)
   if (data._hp && data._hp.length > 0) {
-    return NextResponse.json({ success: true }); // fool the bot
+    return NextResponse.json({ success: true });
   }
 
-  // Timing check – if form was submitted in < 3 seconds, likely a bot
-  if (data._t && Date.now() - data._t < 3000) {
-    return NextResponse.json({ success: true }); // fool the bot
+  // Timing check – require _t; reject too-fast or stale submissions as bots
+  const elapsed = Date.now() - data._t;
+  if (elapsed < MIN_FORM_MS || elapsed > MAX_FORM_MS) {
+    return NextResponse.json({ success: true });
   }
 
-  // Sanitize text fields
   const firstName = sanitize(data.firstName);
   const lastName = sanitize(data.lastName);
   const message = sanitize(data.message ?? "");
   const phone = sanitize(data.phone);
   const cleanData = { ...data, firstName, lastName, message, phone };
 
-  // Send email via Resend
   const apiKey = process.env.RESEND_API_KEY;
   const toEmail = process.env.CONTACT_EMAIL ?? "info@buybuilderdirect.com.au";
   const fromEmail =
     process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
 
   if (!apiKey) {
-    // Dev fallback: log to console if no API key set
-    console.log("📬 [DEV] Contact form submission (no RESEND_API_KEY set):");
+    if (process.env.NODE_ENV === "production") {
+      console.error("RESEND_API_KEY is not set — cannot deliver enquiry");
+      return NextResponse.json(
+        {
+          error:
+            "Failed to send your message. Please try again or call us on +61 489 995 725.",
+        },
+        { status: 500 }
+      );
+    }
+    console.log("[DEV] Contact form submission (no RESEND_API_KEY set):");
     console.log(cleanData);
     return NextResponse.json({ success: true });
   }
 
   const resendHeaders = {
-    "Authorization": `Bearer ${apiKey}`,
+    Authorization: `Bearer ${apiKey}`,
     "Content-Type": "application/json",
   };
 
+  const hasCustomerEmail = Boolean(data.email && EMAIL_RE.test(data.email));
+
   try {
-    // Send both emails in parallel
-    const [notifyRes, confirmRes] = await Promise.all([
-      // Notification to team inbox
-      fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: resendHeaders,
-        body: JSON.stringify({
-          from: `Buy Builder Direct <${fromEmail}>`,
-          to: [toEmail],
-          reply_to: data.email,
-          subject: `New ${data.formType === "lead" ? "Lead" : "Enquiry"} \u2014 ${firstName} ${lastName}`.trim(),
-          html: buildEmailHtml(cleanData),
-        }),
+    const notifyRes = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: resendHeaders,
+      body: JSON.stringify({
+        from: `Buy Builder Direct <${fromEmail}>`,
+        to: [toEmail],
+        ...(hasCustomerEmail ? { reply_to: data.email } : {}),
+        subject: `New ${data.formType === "lead" ? "Lead" : "Enquiry"} \u2014 ${firstName} ${lastName}`.trim(),
+        html: buildEmailHtml(cleanData),
       }),
-      // Confirmation to customer
-      fetch("https://api.resend.com/emails", {
+    });
+
+    if (!notifyRes.ok) {
+      const errBody = await notifyRes.text();
+      console.error("Resend notify error:", notifyRes.status, errBody);
+      throw new Error(`Resend notify error: ${notifyRes.status}`);
+    }
+
+    // Confirmation is best-effort (sandbox may block non-owner recipients)
+    if (hasCustomerEmail) {
+      const confirmRes = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: resendHeaders,
         body: JSON.stringify({
@@ -345,17 +362,11 @@ export async function POST(req: NextRequest) {
           subject: `We've received your enquiry \u2014 Buy Builder Direct`,
           html: buildConfirmationHtml(cleanData),
         }),
-      }),
-    ]);
-
-    if (!notifyRes.ok) {
-      const errBody = await notifyRes.text();
-      console.error("Resend notify error:", notifyRes.status, errBody);
-      throw new Error(`Resend notify error: ${notifyRes.status}`);
-    }
-    if (!confirmRes.ok) {
-      const errBody = await confirmRes.text();
-      console.error("Resend confirmation error:", confirmRes.status, errBody);
+      });
+      if (!confirmRes.ok) {
+        const errBody = await confirmRes.text();
+        console.error("Resend confirmation error:", confirmRes.status, errBody);
+      }
     }
 
     return NextResponse.json({ success: true });

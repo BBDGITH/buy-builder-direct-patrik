@@ -118,9 +118,9 @@ export default function RootLayout({
    lang="en-AU"
    className={`${playfair.variable} ${dmSans.variable} h-full antialiased`}
   >
-   <body className="min-h-full flex flex-col">
+   <body className="min-h-full flex flex-col overflow-x-clip">
     <Header />
-    <main className="flex-1">{children}</main>
+    <main className="flex-1 overflow-x-clip w-full">{children}</main>
     <LatestBlogs />
     <Footer />
     <StickyMobileCTA />

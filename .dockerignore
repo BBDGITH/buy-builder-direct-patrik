@@ -1,0 +1,13 @@
+node_modules
+.next
+.git
+.gitignore
+.env*
+!.env.example
+*.md
+!DEPLOY-DIGITALOCEAN.md
+.DS_Store
+coverage
+terminals
+new pics
+public/images/runge-st-originals-backup
