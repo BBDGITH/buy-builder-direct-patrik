@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import LeadLink from "@/components/shared/LeadLink";
 import {
   DEFAULTS,
   calculateRoi,
@@ -332,9 +333,9 @@ export default function FinancialCalculator({ showCta = true }: { showCta?: bool
           <p className="text-sm mb-4" style={{ color: "#A3A3A3" }}>
             Want a personalised assessment for your scenario?
           </p>
-          <Link href="/contact" className="btn-primary inline-block">
+          <LeadLink href="/contact" className="btn-primary inline-block">
             Get Your Free Savings Assessment
-          </Link>
+          </LeadLink>
         </div>
       )}
     </div>

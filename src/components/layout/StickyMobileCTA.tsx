@@ -34,6 +34,7 @@ export default function StickyMobileCTA() {
  style={{ backgroundColor: "#DC2626" }}
  onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#EF4444")}
  onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#DC2626")}
+ onClick={() => (window as unknown as { fbq?: Function }).fbq?.("track", "Lead")}
  >
  Get Free Quote
  </Link>

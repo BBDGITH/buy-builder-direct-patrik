@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import LeadLink from "@/components/shared/LeadLink";
 import Image from "next/image";
 
 export const metadata: Metadata = {
@@ -87,9 +88,9 @@ export default function KnockDownRebuildPage() {
         One of the smartest strategies in the Australian property market.
        </p>
        <div className="flex flex-col sm:flex-row gap-4">
-        <Link href="/contact" className="btn-primary">
+        <LeadLink href="/contact" className="btn-primary">
          Get a Free Assessment
-        </Link>
+        </LeadLink>
         <Link href="/how-it-works" className="btn-secondary">
          How It Works
         </Link>
@@ -235,9 +236,9 @@ export default function KnockDownRebuildPage() {
       for your Knock Down and Rebuild project.
      </p>
      <div className="flex flex-col sm:flex-row gap-4 justify-center">
-      <Link href="/contact" className="btn-primary">
+      <LeadLink href="/contact" className="btn-primary">
        Get Free Assessment
-      </Link>
+      </LeadLink>
       <Link href="/investments" className="btn-secondary">
        Explore Other Pathways
       </Link>

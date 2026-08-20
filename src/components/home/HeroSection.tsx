@@ -112,7 +112,7 @@ export default function HeroSection() {
             variants={fadeUp}
             className="mt-8 flex flex-col sm:flex-row gap-4 w-full max-w-full sm:w-auto"
           >
-            <Link href="/contact" className="btn-primary text-base px-6 py-4 w-full sm:w-auto">
+            <Link href="/contact" className="btn-primary text-base px-6 py-4 w-full sm:w-auto" onClick={() => (window as unknown as { fbq?: Function }).fbq?.("track", "Lead")}>
               Get Your Free Savings Assessment
             </Link>
             <Link href="/investments" className="btn-secondary text-base px-6 py-4 w-full sm:w-auto">

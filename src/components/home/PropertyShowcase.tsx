@@ -225,7 +225,7 @@ export default function PropertyShowcase() {
           <Link href="/virtual-display-homes" className="btn-secondary text-center">
             Virtual Tours
           </Link>
-          <Link href="/contact" className="btn-primary text-center">
+          <Link href="/contact" className="btn-primary text-center" onClick={() => (window as unknown as { fbq?: Function }).fbq?.("track", "Lead")}>
             Get Free Assessment
           </Link>
         </motion.div>

@@ -118,7 +118,7 @@ export default function AboutPage() {
               </motion.p>
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
                 className="flex flex-col sm:flex-row gap-4">
-                <Link href="/contact" className="btn-primary">Get Free Assessment</Link>
+                <Link href="/contact" className="btn-primary" onClick={() => (window as unknown as { fbq?: Function }).fbq?.("track", "Lead")}>Get Free Assessment</Link>
                 <Link href="/how-it-works" className="btn-secondary">How It Works</Link>
               </motion.div>
             </div>
@@ -348,7 +348,7 @@ export default function AboutPage() {
             </h2>
             <p className="text-lg mb-8" style={{ color: "#A3A3A3" }}>Free savings assessment. No obligation. No agent fees.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/contact" className="btn-primary text-base px-8 py-4">Get My Free Assessment</Link>
+              <Link href="/contact" className="btn-primary text-base px-8 py-4" onClick={() => (window as unknown as { fbq?: Function }).fbq?.("track", "Lead")}>Get My Free Assessment</Link>
               <a href="tel:+61489995725" className="btn-secondary text-base px-8 py-4">Call +61 489 995 725</a>
             </div>
           </motion.div>

@@ -609,7 +609,7 @@ export default function HowItWorksPage() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="mt-8 flex flex-col sm:flex-row items-center gap-4"
           >
-            <Link href="/contact" className="btn-primary text-base px-8 py-4">
+            <Link href="/contact" className="btn-primary text-base px-8 py-4" onClick={() => (window as unknown as { fbq?: Function }).fbq?.("track", "Lead")}>
               Book My Free Assessment
             </Link>
             <a

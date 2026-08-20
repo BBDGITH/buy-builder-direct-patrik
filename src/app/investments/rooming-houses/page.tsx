@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import LeadLink from "@/components/shared/LeadLink";
 import PropertyGallery from "@/components/shared/PropertyGallery";
 import Breadcrumb from "@/components/shared/Breadcrumb";
 import FAQAccordion, { type FAQItem } from "@/components/shared/FAQAccordion";
@@ -129,9 +130,9 @@ export default function RoomingHousesPage() {
  </p>
 
  <div className="mt-8 flex flex-col sm:flex-row gap-4">
- <Link href="/contact?type=rooming-houses" className="btn-primary text-base px-7 py-4">
+ <LeadLink href="/contact?type=rooming-houses" className="btn-primary text-base px-7 py-4">
  Get My Free Assessment
- </Link>
+ </LeadLink>
  <a href="tel:+61489995725" className="btn-secondary text-base px-7 py-4">
  +61 489 995 725
  </a>

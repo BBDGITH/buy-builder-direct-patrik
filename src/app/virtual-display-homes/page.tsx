@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import LeadLink from "@/components/shared/LeadLink";
 import MatterportTour from "@/components/shared/MatterportTour";
 
 export const metadata: Metadata = {
@@ -90,9 +91,9 @@ export default function VirtualDisplayHomesPage() {
             Like what you see? Talk to our team about a builder-direct investment in your target suburb.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact" className="btn-primary">
+            <LeadLink href="/contact" className="btn-primary">
               Get Free Assessment
-            </Link>
+            </LeadLink>
             <Link href="/gallery" className="btn-secondary">
               View Photo Gallery
             </Link>

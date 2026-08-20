@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import LeadLink from "@/components/shared/LeadLink";
 
 export const metadata: Metadata = {
  title: "Case Studies | Buy Builder Direct",
@@ -259,9 +260,9 @@ export default function CaseStudiesPage() {
  Join 180+ investors who have saved millions by dealing direct.
  Your free savings assessment takes less than 5 minutes.
  </p>
- <Link href="/contact" className="btn-primary">
+ <LeadLink href="/contact" className="btn-primary">
  Get My Free Savings Assessment
- </Link>
+ </LeadLink>
  </div>
  </section>
  </>

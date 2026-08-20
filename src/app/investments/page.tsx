@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import LeadLink from "@/components/shared/LeadLink";
 
 export const metadata: Metadata = {
  title: "Investment Pathways | Buy Builder Direct",
@@ -320,9 +321,9 @@ export default function InvestmentsPage() {
  Let&apos;s talk. A 15-minute call with our team will clarify which
  strategy suits your goals, budget, and timeline.
  </p>
- <Link href="/contact" className="btn-primary">
+ <LeadLink href="/contact" className="btn-primary">
  Book a Free Strategy Call
- </Link>
+ </LeadLink>
  </div>
  </section>
  </>

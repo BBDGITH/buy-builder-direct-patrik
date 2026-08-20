@@ -194,7 +194,7 @@ export default function SavingsCalculator() {
                 </div>
 
                 <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
-                  <Link href="/contact" className="btn-primary w-full sm:w-auto text-center px-8 py-3.5">
+                  <Link href="/contact" className="btn-primary w-full sm:w-auto text-center px-8 py-3.5" onClick={() => (window as unknown as { fbq?: Function }).fbq?.("track", "Lead")}>
                     Get a Personalised $$$ Assessment
                   </Link>
                   <p className="text-xs text-center sm:text-left" style={{ color: "#666" }}>

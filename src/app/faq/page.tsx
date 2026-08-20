@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import LeadLink from "@/components/shared/LeadLink";
 import FAQAccordion from "./FAQAccordion";
 
 export const metadata: Metadata = {
@@ -68,9 +69,9 @@ export default function FAQPage() {
  <p className="text-lg mb-8" style={{ color: "#A3A3A3" }}>
  Our team responds within 24 hours — no scripts, no runaround.
  </p>
- <Link href="/contact" className="btn-primary">
+ <LeadLink href="/contact" className="btn-primary">
  Contact Us
- </Link>
+ </LeadLink>
  </div>
  </section>
  </>

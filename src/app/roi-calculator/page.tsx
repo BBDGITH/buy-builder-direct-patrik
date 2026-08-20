@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import LeadLink from "@/components/shared/LeadLink";
 import FinancialCalculator from "@/components/shared/FinancialCalculator";
 
 export const metadata: Metadata = {
@@ -34,9 +35,9 @@ export default function RoiCalculatorPage() {
           <p className="text-sm mb-5" style={{ color: "#A3A3A3" }}>
             Ready to explore builder-direct options for your budget and state?
           </p>
-          <Link href="/contact" className="btn-primary">
+          <LeadLink href="/contact" className="btn-primary">
             Get Your Free Savings Assessment
-          </Link>
+          </LeadLink>
         </div>
       </div>
     </div>
