@@ -18,6 +18,7 @@ export default function WhatsAppWidget() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"
+      onClick={() => (window as unknown as { fbq?: Function }).fbq?.("track", "Lead")}
       className="fixed z-50 flex items-center gap-2 rounded-full shadow-lg transition-transform hover:scale-105 active:scale-95 bottom-[4.5rem] right-4 md:bottom-6 md:right-6"
       style={{
         background: "#25D366",

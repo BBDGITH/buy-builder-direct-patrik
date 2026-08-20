@@ -181,6 +181,7 @@ export default function ContactForm() {
    }
 
    setSubmitted(true);
+   (window as unknown as { fbq?: Function }).fbq?.("track", "Lead");
   } catch {
    setApiError(
     "Network error. Please check your connection or call us on +61 489 995 725."

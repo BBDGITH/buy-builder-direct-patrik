@@ -101,6 +101,7 @@ export default function LeadCapture() {
    }
 
    setSubmitted(true);
+   (window as unknown as { fbq?: Function }).fbq?.("track", "Lead");
   } catch {
    setApiError("Network error. Please call us on +61 489 995 725.");
   } finally {
