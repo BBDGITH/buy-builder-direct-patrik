@@ -12,6 +12,7 @@ function buildSecurityHeaders() {
   ...(isDev ? ["'unsafe-eval'"] : []),
   "https://vercel.live",
   "https://*.vercel-scripts.com",
+  "https://connect.facebook.net",
  ].join(" ");
 
  const csp = [
@@ -20,7 +21,7 @@ function buildSecurityHeaders() {
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com data:",
   "img-src 'self' data: blob: https:",
-  "connect-src 'self' https://api.resend.com https://vitals.vercel-insights.com https://my.matterport.com",
+  "connect-src 'self' https://api.resend.com https://vitals.vercel-insights.com https://my.matterport.com https://www.facebook.com https://connect.facebook.net",
   "frame-src 'self' https://my.matterport.com",
   "frame-ancestors 'self'",
   "base-uri 'self'",
