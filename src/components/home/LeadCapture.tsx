@@ -102,6 +102,26 @@ export default function LeadCapture() {
 
    setSubmitted(true);
    (window as unknown as { fbq?: Function }).fbq?.("track", "Lead");
+
+   try {
+    fetch('https://n8n-pc.duckdns.org/webhook/website-lead', {
+     method: 'POST',
+     headers: { 'Content-Type': 'application/json' },
+     body: JSON.stringify({
+      firstName: form.firstName,
+      lastName: '',
+      email: '',
+      phone: form.phone,
+      budgetRange: '',
+      investmentType: form.investmentType,
+      targetState: form.state,
+      funding: form.fundingAssistance,
+      additionalDetails: '',
+     }),
+    });
+   } catch (e) {
+    console.error('CRM webhook error:', e);
+   }
   } catch {
    setApiError("Network error. Please call us on +61 489 995 725.");
   } finally {

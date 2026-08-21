@@ -182,6 +182,26 @@ export default function ContactForm() {
 
    setSubmitted(true);
    (window as unknown as { fbq?: Function }).fbq?.("track", "Lead");
+
+   try {
+    fetch('https://n8n-pc.duckdns.org/webhook/website-lead', {
+     method: 'POST',
+     headers: { 'Content-Type': 'application/json' },
+     body: JSON.stringify({
+      firstName: form.firstName,
+      lastName: form.lastName,
+      email: form.email,
+      phone: form.phone,
+      budgetRange: form.budget,
+      investmentType: form.investmentType,
+      targetState: form.state,
+      funding: form.fundingAssistance,
+      additionalDetails: form.message,
+     }),
+    });
+   } catch (e) {
+    console.error('CRM webhook error:', e);
+   }
   } catch {
    setApiError(
     "Network error. Please check your connection or call us on +61 489 995 725."
