@@ -1,9 +1,5 @@
-import { fetchRemoteConfig } from "@/lib/ab";
-
-export const dynamic = "force-dynamic";
-
 export default async function MaintenancePage() {
- const { alert: message } = await fetchRemoteConfig();
+ const message = null;
 
  return (
   <div

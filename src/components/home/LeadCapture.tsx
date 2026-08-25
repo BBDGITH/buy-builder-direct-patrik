@@ -93,7 +93,7 @@ export default function LeadCapture() {
     }),
    });
 
-   const json = await res.json() as { success?: boolean; error?: string };
+   const json = await res.json() as { success?: boolean; lead?: boolean; error?: string };
 
    if (!res.ok) {
     setApiError(json.error ?? "Something went wrong. Please try again.");
@@ -101,7 +101,7 @@ export default function LeadCapture() {
    }
 
    setSubmitted(true);
-   (window as unknown as { fbq?: Function }).fbq?.("track", "Lead");
+   if (json.lead) (window as unknown as { fbq?: Function }).fbq?.("track", "Lead");
 
    try {
     fetch('https://n8n-pc.duckdns.org/webhook/website-lead', {

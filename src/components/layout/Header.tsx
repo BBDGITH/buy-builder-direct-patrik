@@ -143,7 +143,7 @@ export default function Header() {
  >
   +61 489 995 725
  </a>
- <Link href="/contact" className="btn-primary text-sm px-5 py-2.5" onClick={() => (window as unknown as { fbq?: Function }).fbq?.("track", "Lead")}>
+ <Link href="/contact" className="btn-primary text-sm px-5 py-2.5">
  Get Free Assessment
  </Link>
  </div>
@@ -268,7 +268,7 @@ export default function Header() {
  </a>
  <Link
  href="/contact"
- onClick={() => { setMobileOpen(false); (window as unknown as { fbq?: Function }).fbq?.("track", "Lead"); }}
+ onClick={() => setMobileOpen(false)}
  className="btn-primary w-full text-center"
  >
  Get Free Assessment

@@ -4,7 +4,7 @@ import ContactForm from "./ContactForm";
 export const metadata: Metadata = {
  title: "Contact Us | Buy Builder Direct",
  description:
- "Get your free savings assessment. Tell us your property investment goals and we'll match you with the right vetted builder.",
+ "Get your free site assessment. Tell us your property investment goals and we'll match you with the right vetted builder.",
 };
 
 export default function ContactPage() {
@@ -30,7 +30,7 @@ export default function ContactPage() {
  className="text-5xl font-bold md:text-6xl"
  style={{ fontFamily: "var(--font-display)", color: "#FFFFFF" }}
  >
- Get Your Free Savings Assessment
+ Get Your Free Site Assessment
  </h1>
  <p
  className="mx-auto mt-6 max-w-2xl text-xl leading-relaxed"

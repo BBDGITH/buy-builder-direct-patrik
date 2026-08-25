@@ -46,7 +46,6 @@ export default function CTABand({ serviceName, slug }: CTABandProps) {
      <Link
       href={`/contact?type=${slug}`}
       className="btn-primary text-base px-8 py-4"
-      onClick={() => (window as unknown as { fbq?: Function }).fbq?.("track", "Lead")}
      >
       Book My Free Assessment
      </Link>
