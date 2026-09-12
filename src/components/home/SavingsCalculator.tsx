@@ -50,18 +50,30 @@ export default function SavingsCalculator() {
             >
               Savings Estimator
             </p>
+
             <h2
               className="text-3xl font-bold md:text-4xl leading-tight"
-              style={{ fontFamily: "var(--font-display)", color: "#FFFFFF" }}
+              style={{
+                fontFamily: "var(--font-display)",
+                color: "#FFFFFF",
+              }}
             >
               How much $$$ could stay in your portfolio?
             </h2>
-            <p className="mt-4 text-base leading-relaxed" style={{ color: "#A3A3A3" }}>
+
+            <p
+              className="mt-4 text-base leading-relaxed"
+              style={{ color: "#A3A3A3" }}
+            >
               Cut out agent markups and marketing layers. This estimator shows a
               realistic dollar range based on your purchase price — not a fixed
               headline claim.
             </p>
-            <ul className="mt-6 space-y-3 text-sm" style={{ color: "#C4C4C4" }}>
+
+            <ul
+              className="mt-6 space-y-3 text-sm"
+              style={{ color: "#C4C4C4" }}
+            >
               {[
                 "Builder-direct pricing",
                 "No agent commission layer",
@@ -72,8 +84,18 @@ export default function SavingsCalculator() {
                     className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-sm shrink-0"
                     style={{ background: "#DC2626" }}
                   >
-                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={3}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    <svg
+                      className="w-3 h-3"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="white"
+                      strokeWidth={3}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                   </span>
                   {item}
@@ -87,7 +109,8 @@ export default function SavingsCalculator() {
             <div
               className="rounded-2xl overflow-hidden"
               style={{
-                background: "linear-gradient(160deg, #1C1C1C 0%, #141414 55%, #1a0a0a 100%)",
+                background:
+                  "linear-gradient(160deg, #1C1C1C 0%, #141414 55%, #1a0a0a 100%)",
                 border: "1px solid rgba(220,38,38,0.35)",
                 boxShadow: "0 24px 60px rgba(0,0,0,0.45)",
               }}
@@ -95,11 +118,18 @@ export default function SavingsCalculator() {
               {/* Top bar */}
               <div
                 className="flex items-center justify-between px-6 py-4"
-                style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", background: "rgba(220,38,38,0.08)" }}
+                style={{
+                  borderBottom: "1px solid rgba(255,255,255,0.06)",
+                  background: "rgba(220,38,38,0.08)",
+                }}
               >
-                <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "#DC2626" }}>
+                <span
+                  className="text-xs font-bold uppercase tracking-widest"
+                  style={{ color: "#DC2626" }}
+                >
                   BBD Direct Pricing Model
                 </span>
+
                 <span className="text-xs" style={{ color: "#888" }}>
                   Indicative only
                 </span>
@@ -108,16 +138,24 @@ export default function SavingsCalculator() {
               <div className="p-6 md:p-8">
                 <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 mb-6">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider mb-1" style={{ color: "#888" }}>
+                    <p
+                      className="text-xs font-semibold uppercase tracking-wider mb-1"
+                      style={{ color: "#888" }}
+                    >
                       Target purchase price
                     </p>
+
                     <p
                       className="text-4xl md:text-5xl font-bold"
-                      style={{ color: "#FFFFFF", fontFamily: "var(--font-display)" }}
+                      style={{
+                        color: "#FFFFFF",
+                        fontFamily: "var(--font-display)",
+                      }}
                     >
                       {formatCurrency(price)}
                     </p>
                   </div>
+
                   <p className="text-sm" style={{ color: "#A3A3A3" }}>
                     Drag to adjust
                   </p>
@@ -137,7 +175,11 @@ export default function SavingsCalculator() {
                   }}
                   aria-label="Purchase price slider"
                 />
-                <div className="flex justify-between mt-2 text-xs" style={{ color: "#666" }}>
+
+                <div
+                  className="flex justify-between mt-2 text-xs"
+                  style={{ color: "#666" }}
+                >
                   <span>$300k</span>
                   <span>$2M</span>
                 </div>
@@ -146,15 +188,31 @@ export default function SavingsCalculator() {
                 <div className="mt-8 grid gap-3 sm:grid-cols-3">
                   <div
                     className="rounded-xl p-4"
-                    style={{ background: "#0A0A0A", border: "1px solid rgba(255,255,255,0.08)" }}
+                    style={{
+                      background: "#0A0A0A",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                    }}
                   >
-                    <p className="text-[11px] uppercase tracking-wider mb-2" style={{ color: "#888" }}>
+                    <p
+                      className="text-[11px] uppercase tracking-wider mb-2"
+                      style={{ color: "#888" }}
+                    >
                       Conservative
                     </p>
-                    <p className="text-2xl font-bold" style={{ color: "#FFFFFF" }}>
+
+                    <p
+                      className="text-2xl font-bold"
+                      style={{ color: "#FFFFFF" }}
+                    >
                       {formatCurrency(result.low)}
                     </p>
-                    <p className="text-xs mt-1" style={{ color: "#666" }}>lower-end estimate</p>
+
+                    <p
+                      className="text-xs mt-1"
+                      style={{ color: "#666" }}
+                    >
+                      lower-end estimate
+                    </p>
                   </div>
 
                   <div
@@ -166,43 +224,99 @@ export default function SavingsCalculator() {
                   >
                     <span
                       className="absolute -top-2.5 left-4 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded"
-                      style={{ background: "#DC2626", color: "#fff" }}
+                      style={{
+                        background: "#DC2626",
+                        color: "#fff",
+                      }}
                     >
                       Likely
                     </span>
-                    <p className="text-[11px] uppercase tracking-wider mb-2" style={{ color: "#F87171" }}>
+
+                    <p
+                      className="text-[11px] uppercase tracking-wider mb-2"
+                      style={{ color: "#F87171" }}
+                    >
                       Typical $$$ kept
                     </p>
-                    <p className="text-2xl font-bold" style={{ color: "#DC2626" }}>
+
+                    <p
+                      className="text-2xl font-bold"
+                      style={{ color: "#DC2626" }}
+                    >
                       {formatCurrency(result.mid)}
                     </p>
-                    <p className="text-xs mt-1" style={{ color: "#A3A3A3" }}>stays in your deal</p>
+
+                    <p
+                      className="text-xs mt-1"
+                      style={{ color: "#A3A3A3" }}
+                    >
+                      stays in your deal
+                    </p>
                   </div>
 
                   <div
                     className="rounded-xl p-4"
-                    style={{ background: "#0A0A0A", border: "1px solid rgba(255,255,255,0.08)" }}
+                    style={{
+                      background: "#0A0A0A",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                    }}
                   >
-                    <p className="text-[11px] uppercase tracking-wider mb-2" style={{ color: "#888" }}>
+                    <p
+                      className="text-[11px] uppercase tracking-wider mb-2"
+                      style={{ color: "#888" }}
+                    >
                       Upside
                     </p>
-                    <p className="text-2xl font-bold" style={{ color: "#FFFFFF" }}>
+
+                    <p
+                      className="text-2xl font-bold"
+                      style={{ color: "#FFFFFF" }}
+                    >
                       {formatCurrency(result.high)}
                     </p>
-                    <p className="text-xs mt-1" style={{ color: "#666" }}>stronger deals</p>
+
+                    <p
+                      className="text-xs mt-1"
+                      style={{ color: "#666" }}
+                    >
+                      stronger deals
+                    </p>
                   </div>
                 </div>
 
                 <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
-                  <Link href="/contact" className="btn-primary w-full sm:w-auto text-center px-8 py-3.5">
+                  <Link
+                    href="/contact"
+                    className="btn-primary w-full sm:w-auto text-center px-8 py-3.5"
+                  >
                     Get a Personalised $$$ Assessment
                   </Link>
-                  <p className="text-xs text-center sm:text-left" style={{ color: "#666" }}>
-                    Estimates only. Actual savings depend on property, builder, and market conditions.
+
+                  <p
+                    className="text-xs text-center sm:text-left"
+                    style={{ color: "#666" }}
+                  >
+                    Estimates only. Actual savings depend on property, builder,
+                    and market conditions.
                   </p>
                 </div>
               </div>
             </div>
+
+            {/* Client-requested disclaimer */}
+            <p
+              className="mt-4 px-1 text-xs leading-relaxed"
+              style={{ color: "#8A8A8A" }}
+            >
+              <strong style={{ color: "#A3A3A3" }}>
+                Illustrative only.
+              </strong>{" "}
+              This calculator produces modelled figures based on the inputs and
+              default assumptions shown, not a forecast or a quote. It does not
+              take into account your objectives, financial situation or needs.
+              Obtain independent financial, tax and legal advice before making
+              any investment decision.
+            </p>
           </div>
         </motion.div>
       </div>
