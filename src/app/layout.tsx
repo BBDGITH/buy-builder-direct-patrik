@@ -2,144 +2,263 @@ import type { Metadata, Viewport } from "next";
 import { Playfair_Display, DM_Sans } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import { Header, Footer, StickyMobileCTA, WhatsAppWidget } from "@/components/layout";
+import {
+  Header,
+  Footer,
+  StickyMobileCTA,
+  WhatsAppWidget,
+} from "@/components/layout";
 import { LatestBlogs } from "@/components/home";
 
 const playfair = Playfair_Display({
- subsets: ["latin"],
- weight: ["700", "800", "900"],
- variable: "--font-playfair",
- display: "swap",
- preload: true,
+  subsets: ["latin"],
+  weight: ["700", "800", "900"],
+  variable: "--font-playfair",
+  display: "swap",
+  preload: true,
 });
 
 const dmSans = DM_Sans({
- subsets: ["latin"],
- weight: ["400", "500", "600", "700"],
- variable: "--font-dmsans",
- display: "swap",
- preload: true,
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-dmsans",
+  display: "swap",
+  preload: true,
 });
 
 const BASE_URL =
- process.env.NEXT_PUBLIC_SITE_URL ?? "https://buybuilderdirect.com.au";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://buybuilderdirect.com.au";
 
 export const viewport: Viewport = {
- themeColor: "#DC2626",
- width: "device-width",
- initialScale: 1,
+  themeColor: "#DC2626",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export const metadata: Metadata = {
- metadataBase: new URL(BASE_URL),
- title: {
-  default: "Buy Builder Direct | Deal Direct with Builders — Save $$$",
-  template: "%s | Buy Builder Direct",
- },
- description:
-  "Save $$$ on your investment property by buying direct from Australian builders. Co-Living, Rooming Houses, SDA/NDIS, House & Land, Custom Builds, Knock Down and Rebuild. No agents. No markups.",
- keywords: [
-  "buy builder direct",
-  "investment property Australia",
-  "co-living homes",
-  "rooming houses",
-  "SDA NDIS housing",
-  "house and land packages",
-  "custom builds",
-  "knock down rebuild",
-  "direct builder",
-  "property investment",
-  "no agent property",
-  "Australian property investment",
- ],
- authors: [{ name: "Buy Builder Direct", url: BASE_URL }],
- creator: "Buy Builder Direct",
- publisher: "Buy Builder Direct",
- robots: {
-  index: true,
-  follow: true,
-  googleBot: {
-   index: true,
-   follow: true,
-   "max-video-preview": -1,
-   "max-image-preview": "large",
-   "max-snippet": -1,
+  metadataBase: new URL(BASE_URL),
+
+  title: {
+    default: "Buy Builder Direct | Deal Direct with Builders — Save $$$",
+    template: "%s | Buy Builder Direct",
   },
- },
- openGraph: {
-  type: "website",
-  locale: "en_AU",
-  url: BASE_URL,
-  siteName: "Buy Builder Direct",
-  title: "Buy Builder Direct | Deal Direct with Builders — Save $$$",
+
   description:
-   "Save $$$ on your investment property by buying direct from Australian builders. No agents. No markups.",
-  images: [
-   {
-    url: "/images/projects/mambourin/mambourin-1.jpg",
-    width: 1200,
-    height: 630,
-    alt: "Buy Builder Direct — Premium investment property, direct from builder",
-   },
+    "Save $$$ on your investment property by buying direct from Australian builders. Co-Living, Rooming Houses, SDA/NDIS, House & Land, Custom Builds, Knock Down and Rebuild. No agents. No markups.",
+
+  keywords: [
+    "buy builder direct",
+    "investment property Australia",
+    "co-living homes",
+    "rooming houses",
+    "SDA NDIS housing",
+    "house and land packages",
+    "custom builds",
+    "knock down rebuild",
+    "direct builder",
+    "property investment",
+    "no agent property",
+    "Australian property investment",
   ],
- },
- twitter: {
-  card: "summary_large_image",
-  title: "Buy Builder Direct | Deal Direct — Save $$$",
-  description:
-   "Save $$$ on your investment property. Direct to builder. No agents. No markups.",
-  images: ["/images/projects/mambourin/mambourin-1.jpg"],
-  creator: "@buybuilderdirect",
- },
- alternates: {
-  canonical: BASE_URL,
- },
- icons: {
-  icon: [
-   { url: "/favicon.ico", sizes: "any" },
-   { url: "/logo.png", type: "image/png" },
+
+  authors: [
+    {
+      name: "Buy Builder Direct",
+      url: BASE_URL,
+    },
   ],
-  apple: "/favicon.ico",
-  shortcut: "/favicon.ico",
- },
- verification: {
-  // Add your Google Search Console & Bing verification codes here:
-  // google: "your-google-verification-code",
-  // other: { "msvalidate.01": "your-bing-code" },
- },
+
+  creator: "Buy Builder Direct",
+  publisher: "Buy Builder Direct",
+
+  robots: {
+    index: true,
+    follow: true,
+
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+
+  openGraph: {
+    type: "website",
+    locale: "en_AU",
+    url: BASE_URL,
+    siteName: "Buy Builder Direct",
+
+    title: "Buy Builder Direct | Deal Direct with Builders — Save $$$",
+
+    description:
+      "Save $$$ on your investment property by buying direct from Australian builders. No agents. No markups.",
+
+    images: [
+      {
+        url: "/images/projects/mambourin/mambourin-1.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Buy Builder Direct — Premium investment property, direct from builder",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+
+    title: "Buy Builder Direct | Deal Direct — Save $$$",
+
+    description:
+      "Save $$$ on your investment property. Direct to builder. No agents. No markups.",
+
+    images: ["/images/projects/mambourin/mambourin-1.jpg"],
+
+    creator: "@buybuilderdirect",
+  },
+
+  alternates: {
+    canonical: BASE_URL,
+  },
+
+  icons: {
+    icon: [
+      {
+        url: "/favicon.ico",
+        sizes: "any",
+      },
+      {
+        url: "/logo.png",
+        type: "image/png",
+      },
+    ],
+
+    apple: "/favicon.ico",
+    shortcut: "/favicon.ico",
+  },
+
+  verification: {
+    // Google Search Console is currently verified through DNS.
+    // Bing verification can also be added here later if required.
+  },
 };
 
 export default function RootLayout({
- children,
+  children,
 }: Readonly<{
- children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
- return (
-  <html
-   lang="en-AU"
-   className={`${playfair.variable} ${dmSans.variable} h-full antialiased`}
-  >
-   <body className="min-h-full flex flex-col overflow-x-clip">
-    <Script id="meta-pixel" strategy="afterInteractive">{`
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window,document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init','514861934951616');
-      fbq('track','PageView');
-    `}</Script>
-    <noscript><img height="1" width="1" style={{display:"none"}} src="https://www.facebook.com/tr?id=514861934951616&ev=PageView&noscript=1" alt="" /></noscript>
-    <Header />
-    <main className="flex-1 overflow-x-clip w-full">{children}</main>
-    <LatestBlogs />
-    <Footer />
-    <WhatsAppWidget />
-    <StickyMobileCTA />
-   </body>
-  </html>
- );
+  return (
+    <html
+      lang="en-AU"
+      className={`${playfair.variable} ${dmSans.variable} h-full antialiased`}
+    >
+      <body className="min-h-full flex flex-col overflow-x-clip">
+
+        {/* =====================================================
+            GOOGLE ANALYTICS 4
+            Measurement ID: G-3YNJWNTRQ8
+        ====================================================== */}
+
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-3YNJWNTRQ8"
+          strategy="afterInteractive"
+        />
+
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+        >
+          {`
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag(){
+              dataLayer.push(arguments);
+            }
+
+            gtag('js', new Date());
+
+            gtag('config', 'G-3YNJWNTRQ8');
+          `}
+        </Script>
+
+
+        {/* =====================================================
+            META / FACEBOOK PIXEL
+        ====================================================== */}
+
+        <Script
+          id="meta-pixel"
+          strategy="afterInteractive"
+        >
+          {`
+            !function(f,b,e,v,n,t,s)
+            {
+              if(f.fbq)return;
+
+              n=f.fbq=function(){
+                n.callMethod ?
+                n.callMethod.apply(n,arguments) :
+                n.queue.push(arguments)
+              };
+
+              if(!f._fbq)f._fbq=n;
+
+              n.push=n;
+              n.loaded=!0;
+              n.version='2.0';
+              n.queue=[];
+
+              t=b.createElement(e);
+              t.async=!0;
+              t.src=v;
+
+              s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s);
+
+            }(
+              window,
+              document,
+              'script',
+              'https://connect.facebook.net/en_US/fbevents.js'
+            );
+
+            fbq('init','514861934951616');
+            fbq('track','PageView');
+          `}
+        </Script>
+
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            src="https://www.facebook.com/tr?id=514861934951616&ev=PageView&noscript=1"
+            alt=""
+          />
+        </noscript>
+
+
+        {/* =====================================================
+            WEBSITE
+        ====================================================== */}
+
+        <Header />
+
+        <main className="flex-1 overflow-x-clip w-full">
+          {children}
+        </main>
+
+        <LatestBlogs />
+
+        <Footer />
+
+        <WhatsAppWidget />
+
+        <StickyMobileCTA />
+
+      </body>
+    </html>
+  );
 }
