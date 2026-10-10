@@ -358,13 +358,43 @@ export default function CaseStudiesPage() {
             />
           </div>
 
-          <div className="flex flex-wrap justify-center gap-6">
-            {clientTestimonials
+          {/* Slider: the reviews are repeated 4 times and the track slides
+              left by half its width, then loops seamlessly. */}
+          <style>{`
+            @keyframes reviews-scroll {
+              from { transform: translateX(0); }
+              to { transform: translateX(-50%); }
+            }
+            .reviews-track {
+              animation: reviews-scroll 45s linear infinite;
+            }
+            .reviews-slider:hover .reviews-track,
+            .reviews-slider:has(details[open]) .reviews-track {
+              animation-play-state: paused;
+            }
+            @media (prefers-reduced-motion: reduce) {
+              .reviews-track { animation: none; }
+            }
+          `}</style>
+
+          <div
+            className="reviews-slider overflow-hidden"
+            style={{
+              maskImage:
+                "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
+              WebkitMaskImage:
+                "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
+            }}
+          >
+            <div className="reviews-track flex w-max">
+            {[0, 1, 2, 3].flatMap((copy) =>
+              clientTestimonials
               .filter((testimonial) => testimonial.name)
               .map((testimonial) => (
               <article
-                key={testimonial.name}
-                className="flex w-full flex-col rounded-xl p-6 md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]"
+                key={`${copy}-${testimonial.name}`}
+                aria-hidden={copy > 0 ? true : undefined}
+                className="mr-6 flex w-[300px] shrink-0 flex-col rounded-xl p-6 md:w-[380px]"
                 style={{
                   background: "#141414",
                   border: "1px solid rgba(220,38,38,0.25)",
@@ -449,7 +479,9 @@ export default function CaseStudiesPage() {
                   </div>
                 </div>
               </article>
-            ))}
+              ))
+            )}
+            </div>
           </div>
         </div>
       </section>
