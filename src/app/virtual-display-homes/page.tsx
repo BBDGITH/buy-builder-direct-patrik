@@ -6,7 +6,7 @@ import MatterportTour from "@/components/shared/MatterportTour";
 export const metadata: Metadata = {
   title: "Virtual Display Homes | Buy Builder Direct",
   description:
-    "Explore 3D virtual tours of Buy Builder Direct rooming houses and custom builds across Victoria.",
+    "Explore 3D virtual tours of Buy Builder Direct rooming houses across Victoria.",
 };
 
 const tours = [
@@ -30,21 +30,6 @@ const tours = [
     subtitle: "43 Doherty St, Deer Park VIC · Rooming House",
     matterportId: "VUdiBcXhHQq",
   },
-  {
-    title: "Custom Built Home — Doreen",
-    subtitle: "Victoria · Custom Build",
-    matterportId: "ZgvWj8Egapx",
-  },
-  {
-    title: "Custom Built Home — Mambourin",
-    subtitle: "Victoria · Custom Build",
-    matterportId: "w7LggpQJrWb",
-  },
-  {
-    title: "Custom Built Home — Rowville",
-    subtitle: "Victoria · Custom Build",
-    matterportId: "uao21VYqjSD",
-  },
 ];
 
 export default function VirtualDisplayHomesPage() {
@@ -62,7 +47,7 @@ export default function VirtualDisplayHomesPage() {
             Walk Through Our Builds
           </h1>
           <p className="text-lg" style={{ color: "#A3A3A3" }}>
-            Explore finished rooming houses and custom homes in immersive 3D — no appointment needed.
+            Explore finished rooming houses in immersive 3D — no appointment needed.
           </p>
           <div className="mx-auto mt-6 h-1 w-24 rounded-full" style={{ background: "#DC2626" }} />
         </div>
