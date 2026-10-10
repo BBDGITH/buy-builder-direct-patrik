@@ -30,6 +30,11 @@ const tours = [
     subtitle: "43 Doherty St, Deer Park VIC · Rooming House",
     matterportId: "VUdiBcXhHQq",
   },
+  {
+    title: "9×9 Rooming House — Braybrook",
+    subtitle: "335 Ballarat Rd, Braybrook",
+    matterportId: "ia2rtwrWA8G",
+  },
 ];
 
 export default function VirtualDisplayHomesPage() {
