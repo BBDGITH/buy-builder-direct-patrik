@@ -61,7 +61,7 @@ const clientTestimonials = [
     location: "Custom Home Design",
     title: "Our Home, Delivered On Time",
     paragraphs: [
-      "Thank you [Buy Builder Direct] for such an exceptional experience building our home and delivering the project on time. Special thanks to Patrick for his knowledge and expertise in guiding us throughout the build journey, couldn't have asked for anything better. Top notch service highly recommend others to use them for their next dream project :-)",
+      "Thank you Buy Builder Direct for such an exceptional experience building our home and delivering the project on time. Special thanks to Patrick for his knowledge and expertise in guiding us throughout the build journey, couldn't have asked for anything better. Top notch service highly recommend others to use them for their next dream project :-)",
     ],
   },
   {
@@ -69,7 +69,7 @@ const clientTestimonials = [
     location: "Custom Home Design",
     title: "Rooming Home Built in Seven Months",
     paragraphs: [
-      "I've just completed an investment rooming home with [Buy Builder Direct], and the experience was smooth from start to finish. They guided me through each step, and construction was completed in seven months. A special thank you to Pat—your support was key to achieving such a high-quality result so quickly.",
+      "I've just completed an investment rooming home with Buy Builder Direct, and the experience was smooth from start to finish. They guided me through each step, and construction was completed in seven months. A special thank you to Pat—your support was key to achieving such a high-quality result so quickly.",
     ],
   },
 ];
