@@ -64,13 +64,12 @@ const clientTestimonials = [
       "Thank you Civic homes for such an exceptional experience building our home and delivering the project on time. Special thanks to Patrick for his knowledge and expertise in guiding us throughout the build journey, couldn't have asked for anything better. Top notch service highly recommend others to use them for their next dream project :-)",
     ],
   },
-  // REVIEW 3: fill in the details below. Cards with an empty name are hidden.
   {
-    name: "",
-    location: "",
-    title: "",
+    name: "Sam Phan",
+    location: "Custom Home Design",
+    title: "Rooming Home Built in Seven Months",
     paragraphs: [
-      "",
+      "I've just completed an investment rooming home with Civic Homes, and the experience was smooth from start to finish. They guided me through each step, and construction was completed in seven months. A special thank you to Pat—your support was key to achieving such a high-quality result so quickly.",
     ],
   },
 ];
