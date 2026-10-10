@@ -1,4 +1,3 @@
-```tsx
 import type { Metadata } from "next";
 import LeadLink from "@/components/shared/LeadLink";
 
@@ -472,4 +471,3 @@ export default function CaseStudiesPage() {
     </>
   );
 }
-```
