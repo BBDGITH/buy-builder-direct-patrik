@@ -56,6 +56,23 @@ const clientTestimonials = [
       "I was very impressed with the entire experience and found building a rooming house with Patrick and his team worthwhile and stress-free. He has a lovely team and connections for every type of work, making the whole process much easier. Thank you so much for your help!",
     ],
   },
+  {
+    name: "Anand Patel",
+    location: "Custom Home Design",
+    title: "Our Home, Delivered On Time",
+    paragraphs: [
+      "Thank you Civic homes for such an exceptional experience building our home and delivering the project on time. Special thanks to Patrick for his knowledge and expertise in guiding us throughout the build journey, couldn't have asked for anything better. Top notch service highly recommend others to use them for their next dream project :-)",
+    ],
+  },
+  // REVIEW 3: fill in the details below. Cards with an empty name are hidden.
+  {
+    name: "",
+    location: "",
+    title: "",
+    paragraphs: [
+      "",
+    ],
+  },
 ];
 
 export default function CaseStudiesPage() {
@@ -342,27 +359,29 @@ export default function CaseStudiesPage() {
             />
           </div>
 
-          <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-1">
-            {clientTestimonials.map((testimonial) => (
+          <div className="flex flex-wrap justify-center gap-6">
+            {clientTestimonials
+              .filter((testimonial) => testimonial.name)
+              .map((testimonial) => (
               <article
                 key={testimonial.name}
-                className="overflow-hidden rounded-xl p-7 md:p-10"
+                className="flex w-full flex-col rounded-xl p-6 md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]"
                 style={{
                   background: "#141414",
                   border: "1px solid rgba(220,38,38,0.25)",
-                  borderLeft: "4px solid #DC2626",
+                  borderTop: "3px solid #DC2626",
                 }}
               >
                 <div
-                  className="mb-5 text-5xl leading-none"
+                  className="flex gap-1 text-lg"
                   style={{ color: "#DC2626" }}
-                  aria-hidden="true"
+                  aria-label="5 out of 5 stars"
                 >
-                  “
+                  ★★★★★
                 </div>
 
                 <h3
-                  className="mb-6 text-2xl font-bold md:text-3xl"
+                  className="mt-4 text-xl font-bold"
                   style={{
                     fontFamily: "var(--font-display)",
                     color: "#FFFFFF",
@@ -371,27 +390,41 @@ export default function CaseStudiesPage() {
                   {testimonial.title}
                 </h3>
 
-                <blockquote>
-                  {testimonial.paragraphs.map((paragraph, index) => (
-                    <p
-                      key={index}
-                      className={index > 0 ? "mt-4" : ""}
-                      style={{
-                        color: "#D4D4D4",
-                        lineHeight: 1.9,
-                      }}
-                    >
-                      {paragraph}
-                    </p>
-                  ))}
+                <blockquote className="mt-3 flex-1 text-sm">
+                  <p style={{ color: "#D4D4D4", lineHeight: 1.75 }}>
+                    &ldquo;{testimonial.paragraphs[0]}
+                    {testimonial.paragraphs.length === 1 && <>&rdquo;</>}
+                  </p>
+
+                  {testimonial.paragraphs.length > 1 && (
+                    <details className="group mt-3">
+                      <summary
+                        className="cursor-pointer list-none text-sm font-semibold [&::-webkit-details-marker]:hidden"
+                        style={{ color: "#DC2626" }}
+                      >
+                        <span className="group-open:hidden">Read full review →</span>
+                        <span className="hidden group-open:inline">Show less ↑</span>
+                      </summary>
+                      {testimonial.paragraphs.slice(1).map((paragraph, index, rest) => (
+                        <p
+                          key={index}
+                          className="mt-3"
+                          style={{ color: "#D4D4D4", lineHeight: 1.75 }}
+                        >
+                          {paragraph}
+                          {index === rest.length - 1 && <>&rdquo;</>}
+                        </p>
+                      ))}
+                    </details>
+                  )}
                 </blockquote>
 
                 <div
-                  className="mt-8 flex items-center gap-4 border-t pt-6"
+                  className="mt-6 flex items-center gap-3 border-t pt-5"
                   style={{ borderColor: "rgba(255,255,255,0.1)" }}
                 >
                   <div
-                    className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full text-xl font-bold"
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-lg font-bold"
                     style={{
                       background: "rgba(220,38,38,0.15)",
                       color: "#FFFFFF",
@@ -402,32 +435,18 @@ export default function CaseStudiesPage() {
                   </div>
 
                   <div>
-                    <p className="text-lg font-bold text-white">
-                      {testimonial.name}
-                    </p>
+                    <p className="font-bold text-white">{testimonial.name}</p>
 
-                    <p
-                      className="text-sm"
-                      style={{ color: "#A3A3A3" }}
-                    >
+                    <p className="text-sm" style={{ color: "#A3A3A3" }}>
                       {testimonial.location}
                     </p>
 
                     <p
-                      className="mt-1 text-xs font-semibold uppercase tracking-wider"
+                      className="mt-0.5 text-xs font-semibold uppercase tracking-wider"
                       style={{ color: "#DC2626" }}
                     >
                       Buy Builder Direct Client
                     </p>
-                  </div>
-
-                  <div
-                    className="ml-auto hidden text-right sm:block"
-                    style={{ color: "#DC2626" }}
-                  >
-                    <span className="text-3xl" aria-hidden="true">
-                      ”
-                    </span>
                   </div>
                 </div>
               </article>
